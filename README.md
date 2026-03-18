@@ -327,7 +327,19 @@ Copy
     padding: 12px 14px;
     font-size: 13px;
     color: var(--text);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    position: relative;
+    user-select: none;
   }
+ 
+  .concept-pill:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.2);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  }
+ 
+  .concept-pill:hover .pill-hint { opacity: 1; }
  
   .concept-pill .pill-label {
     font-size: 10px;
@@ -335,9 +347,157 @@ Copy
     letter-spacing: 1.5px;
     text-transform: uppercase;
     margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
  
   .concept-pill .pill-def { font-size: 12px; color: var(--muted); line-height: 1.5; }
+ 
+  .pill-hint {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    font-style: italic;
+  }
+ 
+  .pill-click-icon {
+    font-size: 10px;
+    opacity: 0.45;
+    flex-shrink: 0;
+  }
+ 
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 10, 20, 0.78);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+ 
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+ 
+  .modal {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 36px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    transform: translateY(12px) scale(0.98);
+    transition: transform 0.22s ease;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+ 
+  .modal-overlay.open .modal {
+    transform: translateY(0) scale(1);
+  }
+ 
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    line-height: 1;
+  }
+  .modal-close:hover { color: var(--white); border-color: rgba(255,255,255,0.2); }
+ 
+  .modal-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+ 
+  .modal-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--white);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+ 
+  .modal-def {
+    font-size: 15px;
+    color: #c5d0df;
+    line-height: 1.7;
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--border);
+  }
+ 
+  .modal-example-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+ 
+  .modal-example-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+ 
+  .modal-example {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--modal-color, var(--sociocultural));
+  }
+ 
+  .modal-example .ex-scenario {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+ 
+  .modal-example .ex-text {
+    font-size: 13px;
+    color: #a8bbd0;
+    line-height: 1.65;
+  }
+ 
+  .modal-example .ex-icon {
+    font-size: 18px;
+    margin-bottom: 8px;
+    display: block;
+  }
  
   /* Practical tools */
   .tool-row {
@@ -915,29 +1075,35 @@ Copy
         <!-- Key concepts -->
         <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
         <div class="concept-grid">
-          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
-            <div class="pill-label" style="color:var(--behaviorism)">Classical Conditioning</div>
+          <div class="concept-pill" onclick="openConcept('classical-conditioning')" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Classical Conditioning <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Learning through repeated association of stimuli (Pavlov's dogs).</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
-            <div class="pill-label" style="color:var(--behaviorism)">Operant Conditioning</div>
+          <div class="concept-pill" onclick="openConcept('operant-conditioning')" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Operant Conditioning <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Behavior shaped by rewards and punishments (Skinner).</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
-            <div class="pill-label" style="color:var(--behaviorism)">Positive Reinforcement</div>
+          <div class="concept-pill" onclick="openConcept('positive-reinforcement')" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Positive Reinforcement <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Adding a reward to increase the likelihood of a behavior.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
-            <div class="pill-label" style="color:var(--behaviorism)">Negative Reinforcement</div>
+          <div class="concept-pill" onclick="openConcept('negative-reinforcement')" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Negative Reinforcement <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Removing an unpleasant stimulus to increase behavior.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
-            <div class="pill-label" style="color:var(--behaviorism)">Extinction</div>
+          <div class="concept-pill" onclick="openConcept('extinction')" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Extinction <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">A behavior disappears when reinforcement is removed consistently.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
-            <div class="pill-label" style="color:var(--behaviorism)">Shaping</div>
+          <div class="concept-pill" onclick="openConcept('shaping')" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Shaping <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Reinforcing successive approximations to a target behavior.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
         </div>
  
@@ -1039,29 +1205,35 @@ Copy
  
         <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
         <div class="concept-grid">
-          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
-            <div class="pill-label" style="color:var(--constructivism)">Schema</div>
+          <div class="concept-pill" onclick="openConcept('schema')" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Schema <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Mental frameworks we use to organize and interpret new information.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
-            <div class="pill-label" style="color:var(--constructivism)">Assimilation</div>
+          <div class="concept-pill" onclick="openConcept('assimilation')" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Assimilation <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Fitting new information into an existing schema without changing it.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
-            <div class="pill-label" style="color:var(--constructivism)">Accommodation</div>
+          <div class="concept-pill" onclick="openConcept('accommodation')" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Accommodation <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Modifying an existing schema to account for new, conflicting information.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
-            <div class="pill-label" style="color:var(--constructivism)">Equilibration</div>
+          <div class="concept-pill" onclick="openConcept('equilibration')" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Equilibration <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">The drive to maintain balance between existing schemas and new experiences.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
-            <div class="pill-label" style="color:var(--constructivism)">Discovery Learning</div>
+          <div class="concept-pill" onclick="openConcept('discovery-learning')" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Discovery Learning <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Students uncover principles themselves through exploration, not instruction.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
-            <div class="pill-label" style="color:var(--constructivism)">Spiral Curriculum</div>
+          <div class="concept-pill" onclick="openConcept('spiral-curriculum')" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Spiral Curriculum <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Revisiting concepts repeatedly with increasing depth (Bruner).</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
         </div>
  
@@ -1165,29 +1337,35 @@ Copy
  
         <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
         <div class="concept-grid">
-          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
-            <div class="pill-label" style="color:var(--sociocultural)">ZPD</div>
+          <div class="concept-pill" onclick="openConcept('zpd')" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">ZPD <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">The gap between independent ability and potential with guidance.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
-            <div class="pill-label" style="color:var(--sociocultural)">Scaffolding</div>
+          <div class="concept-pill" onclick="openConcept('scaffolding')" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">Scaffolding <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Temporary support structures that are gradually removed as competence grows.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
-            <div class="pill-label" style="color:var(--sociocultural)">Mediation</div>
+          <div class="concept-pill" onclick="openConcept('mediation')" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">Mediation <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Use of tools (language, diagrams, symbols) to bridge thinking and learning.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
-            <div class="pill-label" style="color:var(--sociocultural)">MKO</div>
+          <div class="concept-pill" onclick="openConcept('mko')" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">MKO <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">More Knowledgeable Other — the teacher, peer, or resource who provides support.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
-            <div class="pill-label" style="color:var(--sociocultural)">Situated Learning</div>
+          <div class="concept-pill" onclick="openConcept('situated-learning')" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">Situated Learning <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Knowledge is embedded in the context in which it is used (Lave &amp; Wenger).</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
-            <div class="pill-label" style="color:var(--sociocultural)">Community of Practice</div>
+          <div class="concept-pill" onclick="openConcept('community-of-practice')" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">Community of Practice <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Learning through participation in a shared social community with shared goals.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
         </div>
  
@@ -1287,29 +1465,35 @@ Copy
  
         <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
         <div class="concept-grid">
-          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
-            <div class="pill-label" style="color:var(--cognitivism)">Cognitive Load</div>
+          <div class="concept-pill" onclick="openConcept('cognitive-load')" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Cognitive Load <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Working memory has limited capacity. Overloading it blocks learning.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
-            <div class="pill-label" style="color:var(--cognitivism)">Meaningful Learning</div>
+          <div class="concept-pill" onclick="openConcept('meaningful-learning')" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Meaningful Learning <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">New knowledge must link to what students already know (Ausubel).</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
-            <div class="pill-label" style="color:var(--cognitivism)">Bloom's Taxonomy</div>
+          <div class="concept-pill" onclick="openConcept('blooms-taxonomy')" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Bloom's Taxonomy <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">6-level hierarchy: Remember → Understand → Apply → Analyze → Evaluate → Create.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
-            <div class="pill-label" style="color:var(--cognitivism)">Metacognition</div>
+          <div class="concept-pill" onclick="openConcept('metacognition')" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Metacognition <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Awareness and regulation of one's own thinking and learning processes.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
-            <div class="pill-label" style="color:var(--cognitivism)">Advance Organizer</div>
+          <div class="concept-pill" onclick="openConcept('advance-organizer')" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Advance Organizer <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">An overview or frame given before teaching to help students attach new knowledge.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
-          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
-            <div class="pill-label" style="color:var(--cognitivism)">Spaced Repetition</div>
+          <div class="concept-pill" onclick="openConcept('spaced-repetition')" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Spaced Repetition <span class="pill-click-icon">↗</span></div>
             <div class="pill-def">Reviewing material at increasing intervals improves long-term retention.</div>
+            <div class="pill-hint">Click for examples</div>
           </div>
         </div>
  
@@ -1686,12 +1870,289 @@ Copy
   </main>
 </div>
  
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay" id="concept-modal" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-tag" id="modal-tag"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-def" id="modal-def"></div>
+    <div class="modal-example-label">Classroom Examples</div>
+    <div id="modal-examples"></div>
+  </div>
+</div>
+ 
 <script>
   // ── State ──
   const notes = {};
   const visited = new Set(['intro']);
   const quizAnswers = {};
   let quizScore = 0;
+ 
+  // ── Concept data ──
+  const CONCEPTS = {
+    // BEHAVIORISM
+    'classical-conditioning': {
+      theory: 'Behaviorism', color: '#e05c5c',
+      title: 'Classical Conditioning',
+      def: 'Learning through repeated association between a neutral stimulus and one that naturally produces a response. Over time, the neutral stimulus alone triggers the response.',
+      examples: [
+        { icon: '🔔', scenario: 'Workshop start-up routine', text: 'Every lesson begins with you saying "Tools out, goggles on" in the same tone. After a few weeks, students automatically reach for their goggles the moment they hear your voice — before you even finish the sentence.' },
+        { icon: '🏫', scenario: 'Classroom atmosphere', text: 'You consistently play calm background music during focused work time. Students gradually associate that music with concentration — it becomes a cue that signals "this is work time now".' }
+      ]
+    },
+    'operant-conditioning': {
+      theory: 'Behaviorism', color: '#e05c5c',
+      title: 'Operant Conditioning',
+      def: 'Behavior is shaped by its consequences. Actions followed by positive outcomes become more frequent; actions followed by negative outcomes become less frequent.',
+      examples: [
+        { icon: '✅', scenario: 'Praising a correct weld', text: 'A student produces a clean weld bead. You immediately say: "That angle and speed were spot on — that\'s exactly what a professional weld looks like." The specific praise makes it likely she\'ll repeat that technique.' },
+        { icon: '📝', scenario: 'Late assignment consequences', text: 'A student repeatedly submits work late. You apply a consistent, mild consequence every time (e.g. must redo the task during break). The consistent outcome gradually reduces the behavior — not because of anger, but because consequences are predictable.' }
+      ]
+    },
+    'positive-reinforcement': {
+      theory: 'Behaviorism', color: '#e05c5c',
+      title: 'Positive Reinforcement',
+      def: 'Adding something desirable after a behavior to increase the likelihood it will be repeated. The "reward" must follow the behavior immediately to be effective.',
+      examples: [
+        { icon: '🎯', scenario: 'Verbal recognition in class', text: 'A student who rarely contributes offers a good answer. You respond with: "That\'s a really sharp observation — write that down, everyone." The public acknowledgment reinforces participation without feeling staged.' },
+        { icon: '🏆', scenario: 'Progress chart', text: 'In a practical skills module, students tick off competencies as they master them. The visual progress itself becomes rewarding — students start requesting to demonstrate skills so they can "tick the box".' }
+      ]
+    },
+    'negative-reinforcement': {
+      theory: 'Behaviorism', color: '#e05c5c',
+      title: 'Negative Reinforcement',
+      def: 'Removing an unpleasant stimulus when a desired behavior occurs, making that behavior more likely. This is NOT punishment — it increases behavior by removing something aversive.',
+      examples: [
+        { icon: '📋', scenario: 'Removing the checklist', text: 'Students must complete a detailed safety checklist before every task. Once a student demonstrates consistent safe practice over three weeks, you tell them they no longer need the checklist. The removal of the tedious form reinforces the safe behavior.' },
+        { icon: '⏰', scenario: 'Shortened practice time', text: 'Students who arrive on time and set up correctly can skip the slow group warm-up and move directly to the main task. Arriving prepared removes the "boring" starter — which reinforces punctuality and readiness.' }
+      ]
+    },
+    'extinction': {
+      theory: 'Behaviorism', color: '#e05c5c',
+      title: 'Extinction',
+      def: 'A previously reinforced behavior gradually disappears when reinforcement is consistently withheld. Requires patience — behavior may briefly intensify before fading (the "extinction burst").',
+      examples: [
+        { icon: '🙋', scenario: 'Calling out in class', text: 'A student always calls out answers without raising a hand, partly because you sometimes respond to them anyway. When you commit to only responding to raised hands — every single time — the calling-out slowly extinguishes over 1–2 weeks.' },
+        { icon: '📱', scenario: 'Phone checking behavior', text: 'A student checks their phone frequently. Previously, they\'d get away with it. When you consistently and calmly redirect without anger or drama every time it happens, the behavior loses its payoff and decreases.' }
+      ]
+    },
+    'shaping': {
+      theory: 'Behaviorism', color: '#e05c5c',
+      title: 'Shaping',
+      def: 'Reinforcing small successive steps that gradually approximate the final desired behavior. You don\'t wait for the perfect performance — you reward progress toward it.',
+      examples: [
+        { icon: '🔧', scenario: 'Learning to use a lathe', text: 'Week 1: you praise students just for correct posture and hand placement. Week 2: you reinforce smooth feed rate. Week 3: you add feedback on surface finish. Each step builds on the last — the complex skill is built one reinforced component at a time.' },
+        { icon: '🗣️', scenario: 'Oral presentations', text: 'A shy student struggles with public speaking. First, you reinforce them for just standing up. Then for speaking for 30 seconds. Then for making eye contact. Gradually, full confident presentations become achievable through reinforced steps.' }
+      ]
+    },
+ 
+    // CONSTRUCTIVISM
+    'schema': {
+      theory: 'Constructivism', color: '#f4a261',
+      title: 'Schema',
+      def: 'A mental framework or organized knowledge structure that helps us interpret and organize new information. We all carry thousands of schemas — for objects, situations, procedures, and concepts.',
+      examples: [
+        { icon: '🔌', scenario: 'Electrical circuit schema', text: 'A student who has wired a simple light switch already has a basic "circuit" schema. When you introduce three-phase wiring, they immediately try to map it onto their existing schema — which is why they make predictable errors before their schema is updated.' },
+        { icon: '🚗', scenario: 'Workshop safety schema', text: 'Students entering your class already have a schema for "danger" from everyday life. You can leverage this: "The pressure in that hydraulic line is like a fire hose at full blast — what do you do near a fire hose?" Their existing schema does half the work.' }
+      ]
+    },
+    'assimilation': {
+      theory: 'Constructivism', color: '#f4a261',
+      title: 'Assimilation',
+      def: 'Incorporating new information into an existing schema without needing to change the schema. The new fits neatly with what we already know.',
+      examples: [
+        { icon: '⚙️', scenario: 'New tool, familiar principle', text: 'A student who knows how to use a hand drill encounters a pillar drill for the first time. The operation is different, but the core concept (rotating bit, apply pressure, drill through material) assimilates easily into their existing drill schema.' },
+        { icon: '📐', scenario: 'New material, same process', text: 'Students who can read an engineering drawing of a steel part easily assimilate the reading of an aluminium part drawing — the schema for "reading technical drawings" simply absorbs the new material information.' }
+      ]
+    },
+    'accommodation': {
+      theory: 'Constructivism', color: '#f4a261',
+      title: 'Accommodation',
+      def: 'Restructuring or replacing an existing schema to incorporate new information that doesn\'t fit. This is where real cognitive development happens — and it feels uncomfortable.',
+      examples: [
+        { icon: '⚡', scenario: 'AC vs DC misconception', text: 'Students often believe electricity "flows like water in a pipe" — which works for DC. When they meet AC (alternating current), this schema breaks down completely. They must build a new, more complex schema. Expect resistance and confusion — that\'s accommodation happening.' },
+        { icon: '🌡️', scenario: 'Temperature ≠ heat', text: 'Students intuitively think temperature and heat mean the same thing. A well-designed experiment where two materials at the same temperature feel different to touch forces accommodation: their "temperature = heat" schema must be rebuilt into separate concepts.' }
+      ]
+    },
+    'equilibration': {
+      theory: 'Constructivism', color: '#f4a261',
+      title: 'Equilibration',
+      def: 'The ongoing drive to achieve cognitive balance between what we know and what we experience. Disequilibrium (confusion) motivates learning; equilibrium (understanding) is the resolution.',
+      examples: [
+        { icon: '🤔', scenario: 'Productive confusion', text: 'Before explaining how a pressure relief valve works, you show students a pipe that unexpectedly bursts in a simulation. The confusion ("Why did that happen?") is disequilibrium. Their drive to resolve it is equilibration in action — and it makes your explanation stick.' },
+        { icon: '🧩', scenario: 'The "Aha!" moment', text: 'A student struggles for days with why their circuit keeps tripping. When they finally trace the fault, the relief and understanding they feel is equilibrium being restored. That moment of resolution is far more memorable than any explanation you could have given.' }
+      ]
+    },
+    'discovery-learning': {
+      theory: 'Constructivism', color: '#f4a261',
+      title: 'Discovery Learning',
+      def: 'Students uncover principles and solutions themselves through exploration, experimentation, and inquiry — rather than being told the answer. The teacher sets up conditions for discovery.',
+      examples: [
+        { icon: '🔍', scenario: 'Fault-finding task', text: 'Instead of explaining common faults in a pneumatic system, you hand each group a system with a hidden fault and say: "Something is wrong. Find it and fix it." Students discover the principle through genuine investigation — and remember it far longer.' },
+        { icon: '📊', scenario: 'Material testing', text: 'You give students three unknown materials and ask: "Which one would you use to build a load-bearing bracket, and why?" They test, compare, and reason their way to material properties — discovering tensile strength and yield point through their own conclusions.' }
+      ]
+    },
+    'spiral-curriculum': {
+      theory: 'Constructivism', color: '#f4a261',
+      title: 'Spiral Curriculum',
+      def: 'Revisiting core concepts repeatedly across a course, each time with greater depth and complexity. Earlier encounters are simplified; later ones add nuance and sophistication.',
+      examples: [
+        { icon: '🔄', scenario: 'Electricity across terms', text: 'Term 1: students learn that current flows in a circuit. Term 2: they learn Ohm\'s Law. Term 3: they apply it to three-phase systems. Each layer builds on the previous — the same fundamental concept, visited at increasing depth.' },
+        { icon: '📐', scenario: 'Technical drawing', text: 'Module 1: students read simple orthographic projections. Module 3: they produce their own. Module 5: they read and annotate manufacturing drawings with tolerances. The skill spirals from recognition to production to critical reading.' }
+      ]
+    },
+ 
+    // SOCIOCULTURAL
+    'zpd': {
+      theory: 'Sociocultural Theory', color: '#4ecdc4',
+      title: 'Zone of Proximal Development (ZPD)',
+      def: 'The gap between what a learner can do independently and what they can achieve with guidance from a more knowledgeable other. This is the optimal zone for learning — not too easy, not impossible.',
+      examples: [
+        { icon: '🪜', scenario: 'Welding a complex joint', text: 'A student can weld a basic butt joint alone, but struggles with a T-joint in a tight space. With you guiding their hand position and pointing out the puddle color in real time, they complete it successfully. The T-joint in a tight space is their ZPD — and you just taught there.' },
+        { icon: '📐', scenario: 'Reading complex drawings', text: 'A student can read simple 2D drawings but freezes with a full assembly drawing. You sit alongside, pointing out what to look at first: "Start with the title block, then find the main view." Within 20 minutes they can navigate the drawing alone. That\'s the ZPD at work.' }
+      ]
+    },
+    'scaffolding': {
+      theory: 'Sociocultural Theory', color: '#4ecdc4',
+      title: 'Scaffolding',
+      def: 'Temporary, structured support provided by a teacher or peer that enables a learner to achieve something they couldn\'t do independently. Crucially, scaffolding is removed as competence develops.',
+      examples: [
+        { icon: '📋', scenario: 'Step-by-step checklist → independence', text: 'Week 1: students follow a 12-step setup checklist for the CNC machine. Week 4: the checklist is reduced to 6 steps. Week 8: no checklist. The support was real and useful at first — and deliberately removed. That\'s scaffolding done right.' },
+        { icon: '👁️', scenario: 'Worked examples → blank problems', text: 'You show a fully worked hydraulic calculation on the board. Then you give one with blanks where students fill in two steps. Then one where they do all the steps. Each level removes one layer of support. Students arrive at independence gradually.' }
+      ]
+    },
+    'mediation': {
+      theory: 'Sociocultural Theory', color: '#4ecdc4',
+      title: 'Mediation',
+      def: 'The use of cultural tools — language, diagrams, symbols, instruments, technology — to bridge thinking and learning. We don\'t learn directly; we learn through tools that shape how we think.',
+      examples: [
+        { icon: '📏', scenario: 'The vernier caliper as mediator', text: 'A student\'s unaided eye cannot distinguish 0.1mm differences. The vernier caliper mediates between the student\'s intention (measure accurately) and the world. Teaching them to use it is teaching them to think with a new tool — not just operate a device.' },
+        { icon: '🗣️', scenario: 'Language as the primary tool', text: 'When you say "Think of voltage as pressure and current as flow rate," you\'re using language as a mediating tool. The analogy structures the student\'s thinking. Without language, the concept is inaccessible — with it, it becomes graspable.' }
+      ]
+    },
+    'mko': {
+      theory: 'Sociocultural Theory', color: '#4ecdc4',
+      title: 'More Knowledgeable Other (MKO)',
+      def: 'Anyone — teacher, peer, video, manual — who has greater skill or understanding in the area being learned and can provide guidance within the learner\'s ZPD.',
+      examples: [
+        { icon: '👩‍🔧', scenario: 'Peer as MKO', text: 'A student who mastered the TIG welding technique last week becomes the MKO for a student just starting. You pair them deliberately. The experienced student explains in plain language from recent memory — often more effectively than you can, because the gap is smaller.' },
+        { icon: '📱', scenario: 'YouTube as MKO', text: 'A student is stuck on a particular lathe technique. You direct them to a specific video of a machinist demonstrating it. The video becomes their MKO for that skill. Recognizing that learning doesn\'t require a human teacher is a key insight of sociocultural theory.' }
+      ]
+    },
+    'situated-learning': {
+      theory: 'Sociocultural Theory', color: '#4ecdc4',
+      title: 'Situated Learning',
+      def: 'Knowledge is inseparable from the context in which it is learned and used. Authentic learning happens in real, meaningful settings — not abstracted away from practice.',
+      examples: [
+        { icon: '🏭', scenario: 'Learning in the actual workplace', text: 'Students who learn plumbing in a real building site learn differently from those who practice only in a classroom. The noise, time pressure, coordination with others, and real consequences of mistakes are all part of what\'s learned — and can\'t be replicated in simulation.' },
+        { icon: '🔩', scenario: 'Making the task real', text: 'Instead of asking students to calculate torque as an abstract exercise, you give them a real bolt that has been over-tightened and snapped. The failed part gives the calculation meaning: "This is exactly why you need to know this."' }
+      ]
+    },
+    'community-of-practice': {
+      theory: 'Sociocultural Theory', color: '#4ecdc4',
+      title: 'Community of Practice',
+      def: 'A group of people who share a craft or profession and learn together through shared participation, stories, tools, and standards. Learners move from "legitimate peripheral participation" to full membership.',
+      examples: [
+        { icon: '👷', scenario: 'The vocational classroom as community', text: 'Your classroom has its own norms, language, standards, and stories ("remember when the lathe spun out last year?"). New students learn partly by observing and absorbing this culture — how experienced students talk about the work, what they value, how they solve problems.' },
+        { icon: '🤝', scenario: 'Industry visits and mentors', text: 'When you bring a practicing engineer into class, or take students on an industry visit, you\'re exposing them to an existing community of practice. They begin to see themselves as future members — which is a powerful motivator.' }
+      ]
+    },
+ 
+    // COGNITIVISM
+    'cognitive-load': {
+      theory: 'Cognitivism', color: '#9b8fe8',
+      title: 'Cognitive Load',
+      def: 'Working memory has very limited capacity — roughly 7 pieces of information at once. Cognitive overload occurs when a task demands more processing than working memory can handle, blocking learning.',
+      examples: [
+        { icon: '🧠', scenario: 'Too much at once', text: 'You introduce a new machine by explaining its history, safety features, all controls, maintenance schedule, and a complex task — all in one session. Students nod but retain almost nothing. The working memory was full after the first three items. Solution: split the session into focused stages.' },
+        { icon: '📌', scenario: 'Reducing extraneous load', text: 'Your worksheet has a complicated layout with information scattered across the page, forcing students to flip back and forth to compare values. Redesigning it to place all needed information in one clear view frees up working memory for actual thinking — not searching.' }
+      ]
+    },
+    'meaningful-learning': {
+      theory: 'Cognitivism', color: '#9b8fe8',
+      title: 'Meaningful Learning',
+      def: 'New knowledge is genuinely learned (not just memorized) when it connects to existing knowledge in long-term memory. Ausubel\'s key insight: the most important factor in learning is what the learner already knows.',
+      examples: [
+        { icon: '🔗', scenario: 'Connecting to prior knowledge', text: 'Before teaching hydraulic pressure, you ask: "Who\'s ever squeezed a full tube of toothpaste with the cap on?" Every hand goes up. "That feeling — that\'s hydraulic pressure. Now let\'s make it precise." The new concept latches onto something already in long-term memory.' },
+        { icon: '📚', scenario: 'Meaningful vs. rote', text: 'A student memorizes that "P = F/A" for an exam. A week later, it\'s gone. Another student understood it through the toothpaste analogy, then applied it to calculate cylinder force in a real task. They remember it six months later. That\'s the difference between meaningful and rote learning.' }
+      ]
+    },
+    'blooms-taxonomy': {
+      theory: 'Cognitivism', color: '#9b8fe8',
+      title: "Bloom's Taxonomy",
+      def: 'A six-level hierarchy of cognitive skills, from simple recall at the bottom to complex creation at the top. Used to write learning objectives, design assessments, and ensure teaching challenges students at the right level.',
+      examples: [
+        { icon: '📊', scenario: 'Writing objectives at the right level', text: 'A weak objective: "Students will know about electrical safety." A strong one using Bloom\'s: "Students will evaluate a wiring diagram and identify three code violations" (Evaluate level). The second objective is testable, meaningful, and higher-order.' },
+        { icon: '🔺', scenario: 'Sequencing a lesson', text: 'Start the unit: "Name the three types of welding joints" (Remember). Mid-unit: "Explain when you would use each one" (Understand/Apply). End of unit: "Design a joint solution for this structural problem" (Create). Bloom\'s gives your lesson arc a clear cognitive progression.' }
+      ]
+    },
+    'metacognition': {
+      theory: 'Cognitivism', color: '#9b8fe8',
+      title: 'Metacognition',
+      def: 'Awareness and regulation of one\'s own thinking and learning. A metacognitive learner knows when they understand something, when they don\'t, and which strategy to use to fix it.',
+      examples: [
+        { icon: '🪞', scenario: 'The "do you really know it?" test', text: 'After a topic, you ask students to close their notes and write down everything they know about it for 3 minutes. Many discover they can\'t — they thought they understood, but they were just recognizing information. This is a metacognitive wake-up call.' },
+        { icon: '🗣️', scenario: 'Teaching students to self-monitor', text: 'You train students to ask themselves three questions after every session: "What did I learn today? What am I still confused about? What will I do about that confusion before next class?" These three habits are the core of metacognitive regulation — and transformative for independent learners.' }
+      ]
+    },
+    'advance-organizer': {
+      theory: 'Cognitivism', color: '#9b8fe8',
+      title: 'Advance Organizer',
+      def: 'An overview, framework, or bridge provided before instruction that helps learners connect upcoming content to existing knowledge. It prepares the cognitive structure to receive new information.',
+      examples: [
+        { icon: '🗺️', scenario: 'The "big picture" before details', text: 'Before a module on CNC programming, you show a one-page diagram of the entire process from design to finished part. "This is the whole journey. Today we\'ll start here." Students now know where each lesson fits — which dramatically improves retention.' },
+        { icon: '🔍', scenario: 'An analogy as organizer', text: 'Before teaching PID control systems, you say: "Think of it like a driver in fog: they look at how far they are from the line, how fast they\'re drifting, and what they\'ve been doing — and steer to correct. PID does exactly the same, but with numbers." This analogy acts as an advance organizer for the technical content.' }
+      ]
+    },
+    'spaced-repetition': {
+      theory: 'Cognitivism', color: '#9b8fe8',
+      title: 'Spaced Repetition',
+      def: 'Reviewing material at increasing time intervals improves long-term retention far more than massed practice (cramming). Each retrieval attempt strengthens the memory trace.',
+      examples: [
+        { icon: '📅', scenario: 'The 1-day, 1-week, 1-month rule', text: 'After teaching hydraulic calculations, you revisit them briefly at the start of the next lesson (1 day), again the following week in a 5-minute quiz, and again a month later as a warm-up. Students who receive this spaced practice outperform those who only saw it once — even if total time is the same.' },
+        { icon: '🃏', scenario: 'Quick-fire retrieval starters', text: 'Every lesson begins with 5 questions from previous modules — not the current one. Students know this routine. It feels like a quiz, but it\'s actually spaced retrieval practice, systematically strengthening long-term memory across the whole course.' }
+      ]
+    }
+  };
+ 
+  // ── Modal ──
+  function openConcept(key) {
+    const d = CONCEPTS[key];
+    if (!d) return;
+    const overlay = document.getElementById('concept-modal');
+    const modal = document.getElementById('modal-box');
+ 
+    document.getElementById('modal-tag').textContent = d.theory;
+    document.getElementById('modal-tag').style.background = d.color + '22';
+    document.getElementById('modal-tag').style.color = d.color;
+    document.getElementById('modal-title').textContent = d.title;
+    document.getElementById('modal-def').textContent = d.def;
+    modal.style.setProperty('--modal-color', d.color);
+ 
+    const exHTML = d.examples.map(ex => `
+      <div class="modal-example">
+        <span class="ex-icon">${ex.icon}</span>
+        <div class="ex-scenario">${ex.scenario}</div>
+        <div class="ex-text">${ex.text}</div>
+      </div>
+    `).join('');
+    document.getElementById('modal-examples').innerHTML = exHTML;
+ 
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+ 
+  function closeModal(e) {
+    if (e.target === document.getElementById('concept-modal')) closeModalDirect();
+  }
+ 
+  function closeModalDirect() {
+    document.getElementById('concept-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+ 
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
  
   const feedbackTexts = {
     q1: { correct: "Correct! Skinner developed operant conditioning through his famous 'Skinner box' experiments, showing that consequences shape behavior.", wrong: "Not quite. Pavlov discovered classical conditioning (dogs and bells). Skinner developed operant conditioning — behavior shaped by rewards and punishments." },
@@ -1717,7 +2178,7 @@ Copy
   }
  
   function updateProgress() {
-    const total = 8; // intro + 4 theories + compare + quiz + summary
+    const total = 8;
     const pct = Math.round((visited.size / total) * 100);
     document.getElementById('prog-fill').style.width = pct + '%';
     document.getElementById('prog-pct').textContent = pct + '%';
@@ -1790,7 +2251,6 @@ Copy
     btn.classList.add('answered');
     btn.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
  
-    // Check if all done
     if (Object.keys(quizAnswers).length === 8) {
       const box = document.getElementById('quiz-score');
       box.classList.add('show');
@@ -1808,4 +2268,5 @@ Copy
 </script>
 </body>
 </html>
- 
+
+  
