@@ -1,1 +1,1811 @@
-# Learning-theories
+Learning theories interactive · HTML
+Copy
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Theories — A Practical Guide for Vocational Teachers</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1623;
+    --surface: #18243a;
+    --surface2: #1f2f47;
+    --border: rgba(255,255,255,0.08);
+    --text: #e8edf5;
+    --muted: #7a8fa8;
+    --behaviorism: #e05c5c;
+    --constructivism: #f4a261;
+    --sociocultural: #4ecdc4;
+    --cognitivism: #9b8fe8;
+    --gold: #f7c948;
+    --white: #ffffff;
+  }
+ 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+ 
+  /* ── LAYOUT ── */
+  .app { display: flex; min-height: 100vh; }
+ 
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+  }
+ 
+  .sidebar-logo {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+ 
+  .sidebar-logo .eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+ 
+  .sidebar-logo h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    line-height: 1.3;
+    color: var(--white);
+  }
+ 
+  .sidebar-logo h1 span { color: var(--sociocultural); }
+ 
+  /* Progress bar */
+  .progress-section {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+ 
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+ 
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+ 
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sociocultural), #7ee8e2);
+    border-radius: 2px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+ 
+  /* Nav sections */
+  .nav-section { padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .nav-section-label {
+    padding: 0 24px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+ 
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 24px;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+    font-size: 13.5px;
+    color: var(--muted);
+    font-weight: 400;
+    user-select: none;
+  }
+ 
+  .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+  .nav-item.active { border-left-color: var(--accent-color, var(--sociocultural)); color: var(--text); background: rgba(255,255,255,0.05); font-weight: 500; }
+  .nav-item.completed { color: var(--text); }
+ 
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent-color, #3a4a60);
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+  .nav-item.active .nav-dot { box-shadow: 0 0 0 3px rgba(78,205,196,0.25); }
+  .nav-item.completed .nav-dot { background: var(--accent-color); }
+ 
+  .nav-check { font-size: 11px; color: var(--sociocultural); margin-left: auto; opacity: 0; transition: opacity 0.3s; }
+  .nav-item.completed .nav-check { opacity: 1; }
+ 
+  /* ── MAIN CONTENT ── */
+  .main { margin-left: 280px; flex: 1; }
+ 
+  .section { display: none; min-height: 100vh; }
+  .section.active { display: block; }
+ 
+  /* ── HERO / INTRO ── */
+  .hero {
+    background: linear-gradient(160deg, #0f1623 0%, #1a2744 50%, #0f1623 100%);
+    padding: 80px 64px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+ 
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(78,205,196,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+ 
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50px; left: 200px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(155,143,232,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+ 
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--sociocultural);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+ 
+  .hero h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 20px;
+    max-width: 600px;
+  }
+ 
+  .hero h2 em { font-style: italic; color: var(--gold); }
+ 
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+ 
+  .theory-chips {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+ 
+  .chip {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+ 
+  .chip:hover { opacity: 0.85; transform: translateY(-1px); }
+ 
+  .start-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--sociocultural);
+    color: #0a1a18;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+ 
+  .start-btn:hover { background: #5de0d6; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(78,205,196,0.25); }
+  .start-btn svg { transition: transform 0.2s; }
+  .start-btn:hover svg { transform: translateX(3px); }
+ 
+  /* ── CONTENT BLOCKS ── */
+  .content-area {
+    padding: 52px 64px;
+    max-width: 900px;
+  }
+ 
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+ 
+  .theory-badge {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+ 
+  .section-header-text .num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+ 
+  .section-header-text h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 34px;
+    color: var(--white);
+    line-height: 1.1;
+  }
+ 
+  .section-header-text h2 span { font-style: italic; }
+ 
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+ 
+  .card-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+ 
+  .card p { font-size: 15px; line-height: 1.75; color: #c5d0df; }
+ 
+  /* Two-col grid */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+ 
+  /* Concept pills */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 16px 0;
+  }
+ 
+  .concept-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--text);
+  }
+ 
+  .concept-pill .pill-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+ 
+  .concept-pill .pill-def { font-size: 12px; color: var(--muted); line-height: 1.5; }
+ 
+  /* Practical tools */
+  .tool-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+ 
+  .tool-row:last-child { border-bottom: none; }
+ 
+  .tool-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    background: var(--surface2);
+  }
+ 
+  .tool-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .tool-info p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+ 
+  /* ── REFLECTION ── */
+  .reflection-box {
+    background: linear-gradient(135deg, rgba(247,201,72,0.08), rgba(247,201,72,0.03));
+    border: 1px solid rgba(247,201,72,0.2);
+    border-radius: 12px;
+    padding: 28px;
+    margin: 24px 0;
+  }
+ 
+  .reflection-box .ref-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+ 
+  .reflection-box h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+ 
+  .reflection-box textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 14px;
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+  }
+ 
+  .reflection-box textarea:focus { outline: none; border-color: rgba(247,201,72,0.4); }
+  .reflection-box textarea::placeholder { color: var(--muted); }
+ 
+  .save-note-btn {
+    margin-top: 10px;
+    padding: 8px 18px;
+    background: rgba(247,201,72,0.15);
+    border: 1px solid rgba(247,201,72,0.3);
+    border-radius: 6px;
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+ 
+  .save-note-btn:hover { background: rgba(247,201,72,0.25); }
+  .saved-msg { font-size: 12px; color: var(--gold); margin-top: 8px; opacity: 0; transition: opacity 0.3s; }
+ 
+  /* ── QUIZ ── */
+  .quiz-wrapper { max-width: 680px; }
+ 
+  .quiz-q {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+ 
+  .quiz-q .q-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+ 
+  .quiz-q .q-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 18px;
+    line-height: 1.55;
+  }
+ 
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+ 
+  .quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: var(--text);
+    user-select: none;
+  }
+ 
+  .quiz-option:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); }
+  .quiz-option.selected { border-color: var(--q-color, var(--sociocultural)); background: rgba(78,205,196,0.08); }
+  .quiz-option.correct { border-color: #4ade80; background: rgba(74,222,128,0.08); color: #4ade80; }
+  .quiz-option.wrong { border-color: #f87171; background: rgba(248,113,113,0.08); color: #f87171; }
+ 
+  .opt-circle {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--muted);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+  }
+ 
+  .quiz-option.selected .opt-circle { border-color: var(--sociocultural); background: rgba(78,205,196,0.2); }
+  .quiz-option.correct .opt-circle { border-color: #4ade80; background: rgba(74,222,128,0.2); }
+  .quiz-option.wrong .opt-circle { border-color: #f87171; }
+ 
+  .quiz-feedback {
+    font-size: 13px;
+    padding: 10px 14px;
+    border-radius: 7px;
+    margin-top: 12px;
+    line-height: 1.55;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct { background: rgba(74,222,128,0.08); color: #86efac; border: 1px solid rgba(74,222,128,0.2); }
+  .quiz-feedback.wrong { background: rgba(248,113,113,0.08); color: #fca5a5; border: 1px solid rgba(248,113,113,0.2); }
+ 
+  /* Quiz submit / score */
+  .check-btn {
+    padding: 12px 26px;
+    border-radius: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 8px;
+  }
+  .check-btn:hover { background: rgba(255,255,255,0.08); }
+  .check-btn.answered { opacity: 0.5; cursor: default; }
+ 
+  .quiz-score-box {
+    background: linear-gradient(135deg, rgba(78,205,196,0.1), rgba(78,205,196,0.03));
+    border: 1px solid rgba(78,205,196,0.2);
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+    margin-top: 24px;
+    display: none;
+  }
+ 
+  .quiz-score-box.show { display: block; }
+  .score-big { font-family: 'DM Serif Display', serif; font-size: 60px; color: var(--white); }
+  .score-sub { color: var(--muted); font-size: 15px; margin-top: 8px; }
+ 
+  /* ── COMPARISON TABLE ── */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+ 
+  .compare-table th {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+ 
+  .compare-table td {
+    padding: 13px 16px;
+    border-top: 1px solid var(--border);
+    color: #c5d0df;
+    line-height: 1.5;
+    vertical-align: top;
+  }
+ 
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+ 
+  .th-label { background: var(--surface); }
+  .td-label { font-weight: 600; color: var(--text); background: rgba(255,255,255,0.02); }
+ 
+  /* ── NEXT BUTTON ── */
+  .next-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 26px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    margin-top: 36px;
+  }
+ 
+  .next-btn:hover { transform: translateY(-1px); }
+  .next-btn svg { transition: transform 0.2s; }
+  .next-btn:hover svg { transform: translateX(3px); }
+ 
+  /* ── SCENARIO CARDS ── */
+  .scenario-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 14px;
+  }
+ 
+  .scenario-card .sc-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+ 
+  .scenario-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .scenario-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+ 
+  .sc-reveal {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    display: none;
+    border-left: 3px solid;
+  }
+ 
+  .sc-reveal.show { display: block; }
+ 
+  .sc-toggle {
+    margin-top: 12px;
+    padding: 7px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .sc-toggle:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+ 
+  /* ── SUMMARY NOTES ── */
+  .notes-summary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+ 
+  .notes-summary h3 { font-family: 'DM Serif Display', serif; font-size: 22px; margin-bottom: 4px; }
+  .notes-summary .theory-color { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+  .note-text { font-size: 14px; color: var(--muted); font-style: italic; line-height: 1.6; }
+  .no-note { font-size: 13px; color: rgba(255,255,255,0.2); }
+ 
+  /* ── TOOLTIP ── */
+  [data-tip] { position: relative; cursor: help; border-bottom: 1px dashed var(--muted); }
+  [data-tip]:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 50;
+    max-width: 260px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.5;
+  }
+ 
+  /* ── FLOWCHART ── */
+  .flow-row { display: flex; align-items: center; gap: 0; margin: 20px 0; }
+  .flow-box {
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    flex: 1;
+    line-height: 1.35;
+  }
+  .flow-arrow { font-size: 18px; color: var(--muted); padding: 0 8px; flex-shrink: 0; }
+ 
+  /* ── THINKERS ── */
+  .thinker-row {
+    display: flex;
+    gap: 12px;
+    margin: 14px 0;
+  }
+ 
+  .thinker {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .thinker h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .thinker p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+ 
+  /* ── WELCOME GRID ── */
+  .welcome-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 32px 0;
+  }
+ 
+  .welcome-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+ 
+  .welcome-card:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-2px); background: var(--surface2); }
+  .welcome-card .wc-icon { font-size: 28px; margin-bottom: 12px; }
+  .welcome-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .welcome-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .welcome-card .wc-badge { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-bottom: 8px; }
+ 
+  /* section fade */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .section.active .content-area, .section.active .hero { animation: fadeIn 0.35s ease; }
+ 
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+ 
+  /* responsive */
+  @media (max-width: 900px) {
+    .sidebar { width: 240px; min-width: 240px; }
+    .main { margin-left: 240px; }
+    .hero { padding: 50px 36px 40px; }
+    .content-area { padding: 36px; }
+    .hero h2 { font-size: 38px; }
+    .two-col, .welcome-grid { grid-template-columns: 1fr; }
+    .concept-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+ 
+<div class="app">
+ 
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="eyebrow">Professional Development</div>
+      <h1>Learning <span>Theories</span><br>in Practice</h1>
+    </div>
+ 
+    <div class="progress-section">
+      <div class="progress-label">
+        <span>Your progress</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+    </div>
+ 
+    <div class="nav-section">
+      <div class="nav-section-label">Introduction</div>
+      <div class="nav-item active" onclick="goto('intro')" id="nav-intro" style="--accent-color: var(--sociocultural)">
+        <div class="nav-dot"></div> Welcome &amp; Overview
+        <span class="nav-check">✓</span>
+      </div>
+    </div>
+ 
+    <div class="nav-section">
+      <div class="nav-section-label">The Four Theories</div>
+      <div class="nav-item" onclick="goto('behaviorism')" id="nav-behaviorism" style="--accent-color: var(--behaviorism)">
+        <div class="nav-dot"></div> Behaviorism
+        <span class="nav-check">✓</span>
+      </div>
+      <div class="nav-item" onclick="goto('constructivism')" id="nav-constructivism" style="--accent-color: var(--constructivism)">
+        <div class="nav-dot"></div> Constructivism
+        <span class="nav-check">✓</span>
+      </div>
+      <div class="nav-item" onclick="goto('sociocultural')" id="nav-sociocultural" style="--accent-color: var(--sociocultural)">
+        <div class="nav-dot"></div> Sociocultural Theory
+        <span class="nav-check">✓</span>
+      </div>
+      <div class="nav-item" onclick="goto('cognitivism')" id="nav-cognitivism" style="--accent-color: var(--cognitivism)">
+        <div class="nav-dot"></div> Cognitivism
+        <span class="nav-check">✓</span>
+      </div>
+    </div>
+ 
+    <div class="nav-section">
+      <div class="nav-section-label">Apply &amp; Reflect</div>
+      <div class="nav-item" onclick="goto('compare')" id="nav-compare" style="--accent-color: var(--gold)">
+        <div class="nav-dot"></div> Comparison &amp; Scenarios
+        <span class="nav-check">✓</span>
+      </div>
+      <div class="nav-item" onclick="goto('quiz')" id="nav-quiz" style="--accent-color: #7dd3fc">
+        <div class="nav-dot"></div> Knowledge Check
+        <span class="nav-check">✓</span>
+      </div>
+      <div class="nav-item" onclick="goto('summary')" id="nav-summary" style="--accent-color: var(--gold)">
+        <div class="nav-dot"></div> My Notes &amp; Summary
+        <span class="nav-check">✓</span>
+      </div>
+    </div>
+  </nav>
+ 
+  <!-- MAIN -->
+  <main class="main">
+ 
+    <!-- ═══ INTRO ═══ -->
+    <section class="section active" id="sec-intro">
+      <div class="hero">
+        <div class="hero-eyebrow">Vocational Teacher Professional Development</div>
+        <h2>Understanding Learning Theories — and what they mean <em>for you</em></h2>
+        <p class="hero-sub">This interactive guide walks you through the four foundational learning theories every teacher should know. You'll explore the ideas, meet the key thinkers, and discover concrete tools you can use in your classroom tomorrow.</p>
+        <div class="theory-chips">
+          <div class="chip" onclick="goto('behaviorism')" style="color:var(--behaviorism);border-color:var(--behaviorism);background:rgba(224,92,92,0.08)">Behaviorism</div>
+          <div class="chip" onclick="goto('constructivism')" style="color:var(--constructivism);border-color:var(--constructivism);background:rgba(244,162,97,0.08)">Constructivism</div>
+          <div class="chip" onclick="goto('sociocultural')" style="color:var(--sociocultural);border-color:var(--sociocultural);background:rgba(78,205,196,0.08)">Sociocultural Theory</div>
+          <div class="chip" onclick="goto('cognitivism')" style="color:var(--cognitivism);border-color:var(--cognitivism);background:rgba(155,143,232,0.08)">Cognitivism</div>
+        </div>
+        <button class="start-btn" onclick="goto('behaviorism')">
+          Start Learning
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+ 
+      <div class="content-area">
+        <div class="card" style="border-color:rgba(78,205,196,0.2)">
+          <div class="card-title" style="color:var(--sociocultural)">How to use this resource</div>
+          <p>Work through each theory at your own pace. After reading, use the <strong style="color:var(--white)">reflection prompts</strong> to connect the ideas to your own teaching. End with the <strong style="color:var(--white)">Knowledge Check</strong> quiz, and review your notes in <strong style="color:var(--white)">My Notes &amp; Summary</strong>.</p>
+        </div>
+        <div class="welcome-grid">
+          <div class="welcome-card" onclick="goto('behaviorism')">
+            <div class="wc-badge" style="background:rgba(224,92,92,0.15);color:var(--behaviorism)">01</div>
+            <div class="wc-icon">🧠</div>
+            <h3>Behaviorism</h3>
+            <p>How observable behavior is shaped by rewards, punishment, and repetition.</p>
+          </div>
+          <div class="welcome-card" onclick="goto('constructivism')">
+            <div class="wc-badge" style="background:rgba(244,162,97,0.15);color:var(--constructivism)">02</div>
+            <div class="wc-icon">🔨</div>
+            <h3>Constructivism</h3>
+            <p>How learners actively build knowledge from their own experiences.</p>
+          </div>
+          <div class="welcome-card" onclick="goto('sociocultural')">
+            <div class="wc-badge" style="background:rgba(78,205,196,0.15);color:var(--sociocultural)">03</div>
+            <div class="wc-icon">🤝</div>
+            <h3>Sociocultural Theory</h3>
+            <p>How learning happens through social interaction, language, and collaboration.</p>
+          </div>
+          <div class="welcome-card" onclick="goto('cognitivism')">
+            <div class="wc-badge" style="background:rgba(155,143,232,0.15);color:var(--cognitivism)">04</div>
+            <div class="wc-icon">⚙️</div>
+            <h3>Cognitivism</h3>
+            <p>How the mind processes, stores, and retrieves information.</p>
+          </div>
+        </div>
+        <button class="next-btn" onclick="goto('behaviorism')" style="background:var(--sociocultural);color:#0a1a18">
+          Begin with Behaviorism
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </section>
+ 
+    <!-- ═══ BEHAVIORISM ═══ -->
+    <section class="section" id="sec-behaviorism">
+      <div class="hero" style="background:linear-gradient(160deg,#1a0f0f 0%,#2a1414 50%,#1a0f0f 100%)">
+        <div class="hero-eyebrow" style="color:var(--behaviorism)">Theory 01 — Behaviorism</div>
+        <h2>Learning is a change in <em style="color:var(--behaviorism)">observable behavior</em></h2>
+        <p class="hero-sub">Behaviorism focuses entirely on what can be seen and measured. Internal mental states are irrelevant — what matters is the connection between stimulus, response, and reinforcement.</p>
+        <div class="theory-chips">
+          <div class="chip" style="color:var(--behaviorism);border-color:var(--behaviorism);background:rgba(224,92,92,0.08)">Stimulus–Response</div>
+          <div class="chip" style="color:var(--behaviorism);border-color:var(--behaviorism);background:rgba(224,92,92,0.08)">Conditioning</div>
+          <div class="chip" style="color:var(--behaviorism);border-color:var(--behaviorism);background:rgba(224,92,92,0.08)">Reinforcement</div>
+          <div class="chip" style="color:var(--behaviorism);border-color:var(--behaviorism);background:rgba(224,92,92,0.08)">Shaping</div>
+        </div>
+      </div>
+ 
+      <div class="content-area">
+        <!-- How does learning happen -->
+        <div class="card" style="border-left:3px solid var(--behaviorism)">
+          <div class="card-title" style="color:var(--behaviorism)">How does learning happen?</div>
+          <p>Learning occurs when a behavior becomes consistently linked to a stimulus through <span data-tip="A stimulus is any event or signal from the environment that triggers a response.">stimuli</span> and responses. Positive outcomes (reinforcement) make behaviors more likely; negative outcomes (punishment) reduce them. Through repetition and feedback, new behaviors are shaped and maintained.</p>
+        </div>
+ 
+        <!-- S-R flow -->
+        <div class="flow-row">
+          <div class="flow-box" style="background:rgba(224,92,92,0.15);color:var(--behaviorism)">Stimulus<br><small style="opacity:.7;font-weight:400">Input / trigger</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background:rgba(224,92,92,0.1);color:var(--text)">Response<br><small style="opacity:.7;font-weight:400">Observable behavior</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background:rgba(224,92,92,0.2);color:var(--behaviorism)">Reinforcement ±<br><small style="opacity:.7;font-weight:400">Outcome / consequence</small></div>
+        </div>
+ 
+        <!-- Thinkers -->
+        <div class="card-title" style="color:var(--muted);margin:24px 0 10px">Key Thinkers</div>
+        <div class="thinker-row">
+          <div class="thinker" style="border-left:3px solid var(--behaviorism)">
+            <h4>Ivan Pavlov</h4>
+            <p>Discovered <em>classical conditioning</em> through his famous dog experiments — pairing a neutral stimulus with food until the stimulus alone triggered salivation.</p>
+          </div>
+          <div class="thinker" style="border-left:3px solid var(--behaviorism)">
+            <h4>B.F. Skinner</h4>
+            <p>Developed <em>operant conditioning</em>: behavior is shaped by its consequences. Positive reinforcement strengthens behavior; punishment weakens it.</p>
+          </div>
+          <div class="thinker" style="border-left:3px solid var(--behaviorism)">
+            <h4>John B. Watson</h4>
+            <p>Founded behaviorism as a formal school. Argued psychology should focus only on observable behavior, not inner mental states.</p>
+          </div>
+        </div>
+ 
+        <!-- Key concepts -->
+        <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
+        <div class="concept-grid">
+          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Classical Conditioning</div>
+            <div class="pill-def">Learning through repeated association of stimuli (Pavlov's dogs).</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Operant Conditioning</div>
+            <div class="pill-def">Behavior shaped by rewards and punishments (Skinner).</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Positive Reinforcement</div>
+            <div class="pill-def">Adding a reward to increase the likelihood of a behavior.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Negative Reinforcement</div>
+            <div class="pill-def">Removing an unpleasant stimulus to increase behavior.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Extinction</div>
+            <div class="pill-def">A behavior disappears when reinforcement is removed consistently.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--behaviorism)">
+            <div class="pill-label" style="color:var(--behaviorism)">Shaping</div>
+            <div class="pill-def">Reinforcing successive approximations to a target behavior.</div>
+          </div>
+        </div>
+ 
+        <!-- Practical tools -->
+        <div class="card" style="margin-top:20px">
+          <div class="card-title" style="color:var(--behaviorism)">Practical Tools for Your Classroom</div>
+          <div class="tool-row">
+            <div class="tool-icon">🎯</div>
+            <div class="tool-info"><h4>Immediate, specific feedback</h4><p>Reinforce desired behavior the moment it occurs. "Great — you followed the safety checklist correctly before starting the machine."</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">📋</div>
+            <div class="tool-info"><h4>Clear expectations &amp; routines</h4><p>Students learn faster when classroom procedures are explicitly stated and consistently applied. Post rules and follow them every time.</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">🔁</div>
+            <div class="tool-info"><h4>Drill &amp; repetition exercises</h4><p>Repetition builds automaticity. In vocational training, this means repeated practice of safety procedures, tool handling, or technical protocols.</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">📝</div>
+            <div class="tool-info"><h4>Behavior contracts</h4><p>Co-create written agreements with students about expected conduct and consequences. Transparency reduces conflict.</p></div>
+          </div>
+        </div>
+ 
+        <!-- Strengths & limits -->
+        <div class="two-col">
+          <div class="card" style="border-color:rgba(74,222,128,0.2)">
+            <div class="card-title" style="color:#4ade80">✓ Strengths</div>
+            <p>Clear, measurable outcomes. Works well for procedural skills, safety training, and habit formation. Easy to apply consistently.</p>
+          </div>
+          <div class="card" style="border-color:rgba(248,113,113,0.2)">
+            <div class="card-title" style="color:#f87171">✗ Limitations</div>
+            <p>Ignores the inner life of the learner. Doesn't explain curiosity, intrinsic motivation, or how students solve novel problems they've never seen before.</p>
+          </div>
+        </div>
+ 
+        <!-- Reflection -->
+        <div class="reflection-box">
+          <div class="ref-eyebrow">✏ Reflect</div>
+          <h3>How does behaviorism show up in your teaching?</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:14px">Think about a recent lesson. Can you identify moments where you used reinforcement or set up clear stimulus–response patterns? What worked — and what felt mechanical?</p>
+          <textarea id="ref-behav" placeholder="Write your reflection here…"></textarea>
+          <br>
+          <button class="save-note-btn" onclick="saveNote('behav', this)">Save note</button>
+          <div class="saved-msg" id="saved-behav">Saved ✓</div>
+        </div>
+ 
+        <button class="next-btn" onclick="goto('constructivism')" style="background:var(--constructivism);color:#1a0a00">
+          Next: Constructivism
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </section>
+ 
+    <!-- ═══ CONSTRUCTIVISM ═══ -->
+    <section class="section" id="sec-constructivism">
+      <div class="hero" style="background:linear-gradient(160deg,#1a1005 0%,#2a1d09 50%,#1a1005 100%)">
+        <div class="hero-eyebrow" style="color:var(--constructivism)">Theory 02 — Constructivism</div>
+        <h2>Learners <em style="color:var(--constructivism)">build</em> their own understanding</h2>
+        <p class="hero-sub">Constructivism holds that knowledge is not transferred from teacher to student — it is actively constructed by the learner through experience, exploration, and reflection.</p>
+        <div class="theory-chips">
+          <div class="chip" style="color:var(--constructivism);border-color:var(--constructivism);background:rgba(244,162,97,0.08)">Schema</div>
+          <div class="chip" style="color:var(--constructivism);border-color:var(--constructivism);background:rgba(244,162,97,0.08)">Assimilation</div>
+          <div class="chip" style="color:var(--constructivism);border-color:var(--constructivism);background:rgba(244,162,97,0.08)">Accommodation</div>
+          <div class="chip" style="color:var(--constructivism);border-color:var(--constructivism);background:rgba(244,162,97,0.08)">Equilibration</div>
+        </div>
+      </div>
+ 
+      <div class="content-area">
+        <div class="card" style="border-left:3px solid var(--constructivism)">
+          <div class="card-title" style="color:var(--constructivism)">How does learning happen?</div>
+          <p>When learners encounter something new, they try to fit it into existing <span data-tip="A schema is a mental framework or structure that helps us organize and interpret information.">schemas</span>. If it fits, this is <strong style="color:var(--white)">assimilation</strong>. If it doesn't fit, the schema must be restructured — this is <strong style="color:var(--white)">accommodation</strong>. The tension between the two drives learning forward through a process called <strong style="color:var(--white)">equilibration</strong>.</p>
+        </div>
+ 
+        <!-- Piaget flow -->
+        <div class="flow-row" style="margin:20px 0">
+          <div class="flow-box" style="background:rgba(244,162,97,0.15);color:var(--constructivism)">New Experience<br><small style="opacity:.7;font-weight:400">Encounter something unfamiliar</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background:rgba(244,162,97,0.1);color:var(--text)">Assimilation or Accommodation<br><small style="opacity:.7;font-weight:400">Fit in or rebuild schema</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background:rgba(244,162,97,0.2);color:var(--constructivism)">Equilibrium<br><small style="opacity:.7;font-weight:400">New understanding reached</small></div>
+        </div>
+ 
+        <div class="card-title" style="color:var(--muted);margin:24px 0 10px">Key Thinkers</div>
+        <div class="thinker-row">
+          <div class="thinker" style="border-left:3px solid var(--constructivism)">
+            <h4>Jean Piaget</h4>
+            <p>Described how children progress through developmental stages of thinking, constructing knowledge through interaction with the environment.</p>
+          </div>
+          <div class="thinker" style="border-left:3px solid var(--constructivism)">
+            <h4>John Dewey</h4>
+            <p>"Learning by doing." Education should be rooted in real experience and reflection, not passive reception of facts.</p>
+          </div>
+          <div class="thinker" style="border-left:3px solid var(--constructivism)">
+            <h4>Jerome Bruner</h4>
+            <p>Advocated for discovery learning and the spiral curriculum — revisiting core ideas at increasing levels of complexity.</p>
+          </div>
+        </div>
+ 
+        <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
+        <div class="concept-grid">
+          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Schema</div>
+            <div class="pill-def">Mental frameworks we use to organize and interpret new information.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Assimilation</div>
+            <div class="pill-def">Fitting new information into an existing schema without changing it.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Accommodation</div>
+            <div class="pill-def">Modifying an existing schema to account for new, conflicting information.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Equilibration</div>
+            <div class="pill-def">The drive to maintain balance between existing schemas and new experiences.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Discovery Learning</div>
+            <div class="pill-def">Students uncover principles themselves through exploration, not instruction.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--constructivism)">
+            <div class="pill-label" style="color:var(--constructivism)">Spiral Curriculum</div>
+            <div class="pill-def">Revisiting concepts repeatedly with increasing depth (Bruner).</div>
+          </div>
+        </div>
+ 
+        <div class="card" style="margin-top:20px">
+          <div class="card-title" style="color:var(--constructivism)">Practical Tools for Your Classroom</div>
+          <div class="tool-row">
+            <div class="tool-icon">🔍</div>
+            <div class="tool-info"><h4>Problem-based learning (PBL)</h4><p>Present students with a real-world problem before teaching the solution. Let them explore, fail, and construct understanding before you provide input.</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">🧪</div>
+            <div class="tool-info"><h4>Activate prior knowledge</h4><p>Start lessons by asking "What do you already know about this?" New knowledge sticks when connected to what students already have in their schemas.</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">📐</div>
+            <div class="tool-info"><h4>Project work &amp; hands-on tasks</h4><p>In vocational training, building, assembling, or solving a real task is the learning itself — not preparation for learning.</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">💬</div>
+            <div class="tool-info"><h4>Ask students to explain</h4><p>When students articulate their understanding in their own words, they consolidate it. Use "explain to a partner" and "teach me how you solved that".</p></div>
+          </div>
+        </div>
+ 
+        <div class="two-col">
+          <div class="card" style="border-color:rgba(74,222,128,0.2)">
+            <div class="card-title" style="color:#4ade80">✓ Strengths</div>
+            <p>Promotes deep understanding, creativity, and transfer of knowledge. Learners who construct knowledge are better equipped to solve new problems.</p>
+          </div>
+          <div class="card" style="border-color:rgba(248,113,113,0.2)">
+            <div class="card-title" style="color:#f87171">✗ Limitations</div>
+            <p>Can feel unstructured. Without enough guidance, students may construct misconceptions. Requires careful facilitation.</p>
+          </div>
+        </div>
+ 
+        <div class="reflection-box">
+          <div class="ref-eyebrow">✏ Reflect</div>
+          <h3>When do your students build real understanding?</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:14px">Think of a topic where students often struggle. Could you design a task where they explore the concept hands-on before you explain it? What would that look like in your subject area?</p>
+          <textarea id="ref-const" placeholder="Write your reflection here…"></textarea>
+          <br>
+          <button class="save-note-btn" onclick="saveNote('const', this)">Save note</button>
+          <div class="saved-msg" id="saved-const">Saved ✓</div>
+        </div>
+ 
+        <button class="next-btn" onclick="goto('sociocultural')" style="background:var(--sociocultural);color:#0a1a18">
+          Next: Sociocultural Theory
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </section>
+ 
+    <!-- ═══ SOCIOCULTURAL ═══ -->
+    <section class="section" id="sec-sociocultural">
+      <div class="hero" style="background:linear-gradient(160deg,#071614 0%,#0e2422 50%,#071614 100%)">
+        <div class="hero-eyebrow" style="color:var(--sociocultural)">Theory 03 — Sociocultural Theory</div>
+        <h2>Learning happens <em style="color:var(--sociocultural)">between people</em></h2>
+        <p class="hero-sub">Vygotsky argued that learning is fundamentally social. What a student can do with support today, they can do alone tomorrow. The teacher's role is to bridge that gap.</p>
+        <div class="theory-chips">
+          <div class="chip" style="color:var(--sociocultural);border-color:var(--sociocultural);background:rgba(78,205,196,0.08)">ZPD</div>
+          <div class="chip" style="color:var(--sociocultural);border-color:var(--sociocultural);background:rgba(78,205,196,0.08)">Scaffolding</div>
+          <div class="chip" style="color:var(--sociocultural);border-color:var(--sociocultural);background:rgba(78,205,196,0.08)">Mediation</div>
+          <div class="chip" style="color:var(--sociocultural);border-color:var(--sociocultural);background:rgba(78,205,196,0.08)">MKO</div>
+        </div>
+      </div>
+ 
+      <div class="content-area">
+        <div class="card" style="border-left:3px solid var(--sociocultural)">
+          <div class="card-title" style="color:var(--sociocultural)">How does learning happen?</div>
+          <p>Learning is embedded in social interaction, language, and cultural tools. The most important concept is the <span data-tip="Zone of Proximal Development: the gap between what a learner can do alone and what they can do with expert guidance.">Zone of Proximal Development (ZPD)</span> — the space between what a learner can do independently and what they can do with expert support. The role of the teacher (or peer) is to provide temporary scaffolding within this zone.</p>
+        </div>
+ 
+        <!-- ZPD visual -->
+        <div style="position:relative;margin:24px 0;padding:24px;background:var(--surface);border-radius:12px;border:1px solid var(--border);text-align:center">
+          <div style="width:280px;height:280px;border-radius:50%;border:2px dashed rgba(78,205,196,0.3);margin:0 auto;display:flex;align-items:center;justify-content:center;position:relative">
+            <div style="position:absolute;width:100%;top:-32px;font-size:12px;color:var(--sociocultural);font-weight:600;letter-spacing:1px;text-transform:uppercase">What the student can achieve with support (ZPD)</div>
+            <div style="width:170px;height:170px;border-radius:50%;background:rgba(78,205,196,0.15);border:2px solid var(--sociocultural);display:flex;align-items:center;justify-content:center">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--white)">Current Level</div>
+                <div style="font-size:12px;color:var(--muted)">What they can do alone</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px;font-size:13px;color:var(--muted);font-style:italic">Vygotsky's Zone of Proximal Development</div>
+        </div>
+ 
+        <div class="card-title" style="color:var(--muted);margin:24px 0 10px">Key Thinkers</div>
+        <div class="thinker-row">
+          <div class="thinker" style="border-left:3px solid var(--sociocultural)">
+            <h4>Lev Vygotsky</h4>
+            <p>Introduced ZPD and argued that language is the primary tool of thought. Learning precedes development.</p>
+          </div>
+          <div class="thinker" style="border-left:3px solid var(--sociocultural)">
+            <h4>Lave &amp; Wenger</h4>
+            <p>Developed the concept of <em>situated learning</em> and <em>communities of practice</em> — learning as participation in a social community.</p>
+          </div>
+          <div class="thinker" style="border-left:3px solid var(--sociocultural)">
+            <h4>James Wertsch</h4>
+            <p>Extended Vygotsky's ideas to include how cultural tools (language, diagrams, technology) mediate thinking and learning.</p>
+          </div>
+        </div>
+ 
+        <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
+        <div class="concept-grid">
+          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">ZPD</div>
+            <div class="pill-def">The gap between independent ability and potential with guidance.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">Scaffolding</div>
+            <div class="pill-def">Temporary support structures that are gradually removed as competence grows.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">Mediation</div>
+            <div class="pill-def">Use of tools (language, diagrams, symbols) to bridge thinking and learning.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">MKO</div>
+            <div class="pill-def">More Knowledgeable Other — the teacher, peer, or resource who provides support.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">Situated Learning</div>
+            <div class="pill-def">Knowledge is embedded in the context in which it is used (Lave &amp; Wenger).</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--sociocultural)">
+            <div class="pill-label" style="color:var(--sociocultural)">Community of Practice</div>
+            <div class="pill-def">Learning through participation in a shared social community with shared goals.</div>
+          </div>
+        </div>
+ 
+        <div class="card" style="margin-top:20px">
+          <div class="card-title" style="color:var(--sociocultural)">Practical Tools for Your Classroom</div>
+          <div class="tool-row">
+            <div class="tool-icon">🪜</div>
+            <div class="tool-info"><h4>Scaffolding &amp; fading</h4><p>Start with full support (worked examples, checklists, step-by-step guides), then systematically reduce help as confidence grows. Never remove scaffolding all at once.</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">🗣️</div>
+            <div class="tool-info"><h4>Think-alouds &amp; modelling</h4><p>Verbalize your own reasoning while demonstrating a task. "Now I notice the pressure is too high, so I'm going to adjust it because..." — language makes invisible expertise visible.</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">👥</div>
+            <div class="tool-info"><h4>Structured peer collaboration</h4><p>Pair a more experienced student with a less experienced one on a real task. Explain clearly what each role should do. Learning through teaching is powerful.</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">💬</div>
+            <div class="tool-info"><h4>Rich classroom dialogue</h4><p>Ask open questions that invite reasoning: "Why do you think that worked?" "What would happen if you tried it differently?" Language is the primary learning tool.</p></div>
+          </div>
+        </div>
+ 
+        <div class="two-col">
+          <div class="card" style="border-color:rgba(74,222,128,0.2)">
+            <div class="card-title" style="color:#4ade80">✓ Strengths</div>
+            <p>Highly relevant for vocational training. Explains mentorship, apprenticeship, and workplace learning. Recognizes the social nature of professional competence.</p>
+          </div>
+          <div class="card" style="border-color:rgba(248,113,113,0.2)">
+            <div class="card-title" style="color:#f87171">✗ Limitations</div>
+            <p>Requires well-structured collaboration. Without guidance, group work can be unproductive. Measuring ZPD precisely is difficult.</p>
+          </div>
+        </div>
+ 
+        <div class="reflection-box">
+          <div class="ref-eyebrow">✏ Reflect</div>
+          <h3>Where are you the "More Knowledgeable Other"?</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:14px">Think about a skill your students are developing. What do they currently struggle with? How do you bridge the gap between where they are and where they need to be? Are you fading your support as they improve?</p>
+          <textarea id="ref-socio" placeholder="Write your reflection here…"></textarea>
+          <br>
+          <button class="save-note-btn" onclick="saveNote('socio', this)">Save note</button>
+          <div class="saved-msg" id="saved-socio">Saved ✓</div>
+        </div>
+ 
+        <button class="next-btn" onclick="goto('cognitivism')" style="background:var(--cognitivism);color:#0f0d1a">
+          Next: Cognitivism
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </section>
+ 
+    <!-- ═══ COGNITIVISM ═══ -->
+    <section class="section" id="sec-cognitivism">
+      <div class="hero" style="background:linear-gradient(160deg,#100f1a 0%,#1a1830 50%,#100f1a 100%)">
+        <div class="hero-eyebrow" style="color:var(--cognitivism)">Theory 04 — Cognitivism</div>
+        <h2>The mind as an <em style="color:var(--cognitivism)">information processor</em></h2>
+        <p class="hero-sub">Cognitivism looks inside the black box. Learning is about how the mind receives, processes, stores, and retrieves information. Understanding this helps you design lessons that actually stick.</p>
+        <div class="theory-chips">
+          <div class="chip" style="color:var(--cognitivism);border-color:var(--cognitivism);background:rgba(155,143,232,0.08)">Working Memory</div>
+          <div class="chip" style="color:var(--cognitivism);border-color:var(--cognitivism);background:rgba(155,143,232,0.08)">Long-term Memory</div>
+          <div class="chip" style="color:var(--cognitivism);border-color:var(--cognitivism);background:rgba(155,143,232,0.08)">Metacognition</div>
+          <div class="chip" style="color:var(--cognitivism);border-color:var(--cognitivism);background:rgba(155,143,232,0.08)">Bloom's Taxonomy</div>
+        </div>
+      </div>
+ 
+      <div class="content-area">
+        <div class="card" style="border-left:3px solid var(--cognitivism)">
+          <div class="card-title" style="color:var(--cognitivism)">How does learning happen?</div>
+          <p>New information enters through the senses into <span data-tip="Sensory register: the brief, large-capacity store that holds raw sensory impressions for less than a second.">sensory register</span>, then moves to <span data-tip="Working memory: limited capacity (~7 items), holds information while we actively think with it.">working memory</span> for active processing. If well-encoded, it transfers to <span data-tip="Long-term memory: essentially unlimited capacity, stores knowledge and skills over time.">long-term memory</span>. The quality of learning depends on how deeply information is processed and how well it connects to existing knowledge.</p>
+        </div>
+ 
+        <!-- Memory model -->
+        <div class="flow-row" style="margin:20px 0">
+          <div class="flow-box" style="background:rgba(155,143,232,0.1);color:var(--cognitivism);font-size:12px">Sensory Register<br><small style="opacity:.7;font-weight:400;font-size:11px">Brief, raw input</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background:rgba(155,143,232,0.2);color:var(--cognitivism);font-size:12px">Working Memory<br><small style="opacity:.7;font-weight:400;font-size:11px">~7 items, active thinking</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background:rgba(155,143,232,0.3);color:var(--white);font-size:12px">Long-term Memory<br><small style="opacity:.7;font-weight:400;font-size:11px">Unlimited, permanent</small></div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:24px;font-style:italic">Atkinson &amp; Shiffrin's Multi-Store Model of Memory</div>
+ 
+        <div class="card-title" style="color:var(--muted);margin:24px 0 10px">Key Thinkers</div>
+        <div class="thinker-row">
+          <div class="thinker" style="border-left:3px solid var(--cognitivism)">
+            <h4>David Ausubel</h4>
+            <p>Emphasized <em>meaningful learning</em>: new knowledge must connect to existing knowledge. Introduced <em>advance organizers</em> as a teaching tool.</p>
+          </div>
+          <div class="thinker" style="border-left:3px solid var(--cognitivism)">
+            <h4>Benjamin Bloom</h4>
+            <p>Created Bloom's Taxonomy — a hierarchy of cognitive skills from remembering to creating. Used worldwide for lesson planning.</p>
+          </div>
+          <div class="thinker" style="border-left:3px solid var(--cognitivism)">
+            <h4>John Flavell</h4>
+            <p>Coined <em>metacognition</em> — thinking about one's own thinking. Students who monitor their own understanding learn more effectively.</p>
+          </div>
+        </div>
+ 
+        <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
+        <div class="concept-grid">
+          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Cognitive Load</div>
+            <div class="pill-def">Working memory has limited capacity. Overloading it blocks learning.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Meaningful Learning</div>
+            <div class="pill-def">New knowledge must link to what students already know (Ausubel).</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Bloom's Taxonomy</div>
+            <div class="pill-def">6-level hierarchy: Remember → Understand → Apply → Analyze → Evaluate → Create.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Metacognition</div>
+            <div class="pill-def">Awareness and regulation of one's own thinking and learning processes.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Advance Organizer</div>
+            <div class="pill-def">An overview or frame given before teaching to help students attach new knowledge.</div>
+          </div>
+          <div class="concept-pill" style="border-left:2px solid var(--cognitivism)">
+            <div class="pill-label" style="color:var(--cognitivism)">Spaced Repetition</div>
+            <div class="pill-def">Reviewing material at increasing intervals improves long-term retention.</div>
+          </div>
+        </div>
+ 
+        <!-- Bloom's visual -->
+        <div class="card" style="margin-top:20px">
+          <div class="card-title" style="color:var(--cognitivism)">Bloom's Taxonomy in Practice</div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Use this when planning learning objectives. Move students from lower to higher cognitive levels over time.</p>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="padding:8px 16px;border-radius:6px;font-size:13px;background:rgba(155,143,232,0.4);color:var(--white)"><strong>Create</strong> — Design, produce, construct, compose</div>
+            <div style="padding:8px 16px;border-radius:6px;font-size:13px;background:rgba(155,143,232,0.32);color:var(--white)"><strong>Evaluate</strong> — Judge, critique, justify, assess</div>
+            <div style="padding:8px 16px;border-radius:6px;font-size:13px;background:rgba(155,143,232,0.25);color:var(--text)"><strong>Analyze</strong> — Compare, differentiate, organize, examine</div>
+            <div style="padding:8px 16px;border-radius:6px;font-size:13px;background:rgba(155,143,232,0.18);color:var(--text)"><strong>Apply</strong> — Use, implement, solve, demonstrate</div>
+            <div style="padding:8px 16px;border-radius:6px;font-size:13px;background:rgba(155,143,232,0.12);color:var(--muted)"><strong>Understand</strong> — Explain, summarize, interpret, paraphrase</div>
+            <div style="padding:8px 16px;border-radius:6px;font-size:13px;background:rgba(155,143,232,0.06);color:var(--muted)"><strong>Remember</strong> — Recall, list, recognize, name</div>
+          </div>
+        </div>
+ 
+        <div class="card" style="margin-top:16px">
+          <div class="card-title" style="color:var(--cognitivism)">Practical Tools for Your Classroom</div>
+          <div class="tool-row">
+            <div class="tool-icon">🗺️</div>
+            <div class="tool-info"><h4>Concept maps</h4><p>Have students map the relationships between key ideas visually. This forces them to structure and connect knowledge — moving it deeper into long-term memory.</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">📌</div>
+            <div class="tool-info"><h4>Advance organizers</h4><p>Before a new topic, show a visual overview or outline of what's coming. This gives students cognitive "hooks" to attach new information to.</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">🔄</div>
+            <div class="tool-info"><h4>Spaced repetition</h4><p>Revisit key content after 1 day, 1 week, and 1 month. Brief retrieval practice (quiz, question) is far more effective than re-reading.</p></div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-icon">🧭</div>
+            <div class="tool-info"><h4>Teach metacognitive strategies</h4><p>Help students monitor their own understanding: "Do I actually understand this, or do I just recognize it?" Teach them to self-test, not just re-read.</p></div>
+          </div>
+        </div>
+ 
+        <div class="two-col">
+          <div class="card" style="border-color:rgba(74,222,128,0.2)">
+            <div class="card-title" style="color:#4ade80">✓ Strengths</div>
+            <p>Offers powerful, evidence-based instructional strategies (spaced practice, retrieval practice, reducing cognitive load). Very practical for lesson design.</p>
+          </div>
+          <div class="card" style="border-color:rgba(248,113,113,0.2)">
+            <div class="card-title" style="color:#f87171">✗ Limitations</div>
+            <p>Can become overly technical. Doesn't fully account for emotional, social, or cultural factors in learning.</p>
+          </div>
+        </div>
+ 
+        <div class="reflection-box">
+          <div class="ref-eyebrow">✏ Reflect</div>
+          <h3>Are your students overloaded?</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:14px">Think about a complex lesson you teach. How much new information do you introduce at once? Do students have the cognitive scaffolding to handle it? How could you use advance organizers or chunking to reduce cognitive load?</p>
+          <textarea id="ref-cogn" placeholder="Write your reflection here…"></textarea>
+          <br>
+          <button class="save-note-btn" onclick="saveNote('cogn', this)">Save note</button>
+          <div class="saved-msg" id="saved-cogn">Saved ✓</div>
+        </div>
+ 
+        <button class="next-btn" onclick="goto('compare')" style="background:var(--gold);color:#1a1000">
+          Next: Compare &amp; Apply
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </section>
+ 
+    <!-- ═══ COMPARE & SCENARIOS ═══ -->
+    <section class="section" id="sec-compare">
+      <div class="hero" style="background:linear-gradient(160deg,#12100a 0%,#201b0c 50%,#12100a 100%)">
+        <div class="hero-eyebrow" style="color:var(--gold)">Apply & Compare</div>
+        <h2>All four theories — <em style="color:var(--gold)">side by side</em></h2>
+        <p class="hero-sub">No single theory explains learning completely. Expert teachers draw on all four — choosing the right approach for the right moment. Here's how to see the differences clearly, and how to apply them.</p>
+      </div>
+ 
+      <div class="content-area">
+        <!-- Comparison table -->
+        <div class="card" style="padding:0;overflow:auto">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th class="th-label" style="width:160px"></th>
+                <th style="color:var(--behaviorism)">Behaviorism</th>
+                <th style="color:var(--constructivism)">Constructivism</th>
+                <th style="color:var(--sociocultural)">Sociocultural</th>
+                <th style="color:var(--cognitivism)">Cognitivism</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-label">View of learning</td>
+                <td>Change in observable behavior</td>
+                <td>Active knowledge construction</td>
+                <td>Social &amp; cultural participation</td>
+                <td>Information processing</td>
+              </tr>
+              <tr>
+                <td class="td-label">The teacher is…</td>
+                <td>Instructor &amp; reinforcer</td>
+                <td>Facilitator &amp; guide</td>
+                <td>Scaffolder &amp; MKO</td>
+                <td>Explainer &amp; designer</td>
+              </tr>
+              <tr>
+                <td class="td-label">The student is…</td>
+                <td>Passive receiver</td>
+                <td>Active constructor</td>
+                <td>Social participant</td>
+                <td>Active processor</td>
+              </tr>
+              <tr>
+                <td class="td-label">Key tool</td>
+                <td>Reinforcement, drill</td>
+                <td>Projects, exploration</td>
+                <td>Dialogue, collaboration</td>
+                <td>Concept maps, Bloom's</td>
+              </tr>
+              <tr>
+                <td class="td-label">Best for</td>
+                <td>Safety habits, procedures</td>
+                <td>Problem-solving, creativity</td>
+                <td>Mentorship, teamwork</td>
+                <td>Structured knowledge transfer</td>
+              </tr>
+              <tr>
+                <td class="td-label">Key limitation</td>
+                <td>Ignores the inner life</td>
+                <td>Can lack structure</td>
+                <td>Needs well-managed groups</td>
+                <td>Misses social/emotional factors</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+ 
+        <!-- Scenarios -->
+        <div style="margin-top:36px">
+          <div class="card-title" style="color:var(--gold);margin-bottom:6px">Classroom Scenarios</div>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:20px">Read each scenario. Think about which theory best explains the situation. Then reveal the analysis.</p>
+        </div>
+ 
+        <div class="scenario-card">
+          <div class="sc-tag" style="background:rgba(224,92,92,0.15);color:var(--behaviorism)">Scenario 1</div>
+          <h4>The student who always forgets safety goggles</h4>
+          <p>You have a student in your workshop who repeatedly forgets to put on safety goggles. You've reminded him many times. What theory guides your next move?</p>
+          <button class="sc-toggle" onclick="toggleReveal(this)">Show analysis ↓</button>
+          <div class="sc-reveal" style="color:#fca5a5;background:rgba(224,92,92,0.07);border-color:var(--behaviorism)">
+            <strong>Behaviorist approach:</strong> The behavior (forgetting goggles) has not been consistently followed by an unpleasant consequence or extinguished. Implement a clear, consistent rule with immediate consequences every single time. Also consider using positive reinforcement: when he puts them on unprompted, acknowledge it specifically. Consistency is everything in operant conditioning.
+          </div>
+        </div>
+ 
+        <div class="scenario-card">
+          <div class="sc-tag" style="background:rgba(244,162,97,0.15);color:var(--constructivism)">Scenario 2</div>
+          <h4>Students who can follow steps but can't problem-solve</h4>
+          <p>Your students can follow a manual perfectly, but when something goes wrong they freeze. They've memorized the process but don't understand why it works.</p>
+          <button class="sc-toggle" onclick="toggleReveal(this)">Show analysis ↓</button>
+          <div class="sc-reveal" style="color:#fcd9b0;background:rgba(244,162,97,0.07);border-color:var(--constructivism)">
+            <strong>Constructivist response:</strong> They've been trained, not educated. They've assimilated steps without building real schemas. Try deliberately breaking the procedure and asking students to diagnose what went wrong. Let them struggle productively before you explain. Introduce tasks with no single right answer. Their job is to build understanding, not just reproduce steps.
+          </div>
+        </div>
+ 
+        <div class="scenario-card">
+          <div class="sc-tag" style="background:rgba(78,205,196,0.15);color:var(--sociocultural)">Scenario 3</div>
+          <h4>The silent student who learns by watching</h4>
+          <p>One of your students rarely speaks in class, but you notice she performs excellently when working alongside experienced peers. She struggles alone.</p>
+          <button class="sc-toggle" onclick="toggleReveal(this)">Show analysis ↓</button>
+          <div class="sc-reveal" style="color:#a5eeea;background:rgba(78,205,196,0.07);border-color:var(--sociocultural)">
+            <strong>Sociocultural lens:</strong> She's learning within the ZPD — she can do things with support that she can't yet do alone. This is not a weakness; it's exactly where learning happens. Structure more collaborative tasks for her, ensure the pairing is supportive rather than dominant, and gradually give her tasks that require more independence. Track whether the gap narrows over time.
+          </div>
+        </div>
+ 
+        <div class="scenario-card">
+          <div class="sc-tag" style="background:rgba(155,143,232,0.15);color:var(--cognitivism)">Scenario 4</div>
+          <h4>Students who seem to understand but fail the exam</h4>
+          <p>In class, everything seems fine — students nod, respond correctly. But test results are poor. What's going wrong?</p>
+          <button class="sc-toggle" onclick="toggleReveal(this)">Show analysis ↓</button>
+          <div class="sc-reveal" style="color:#c4b8ff;background:rgba(155,143,232,0.07);border-color:var(--cognitivism)">
+            <strong>Cognitivist diagnosis:</strong> Students are likely recognizing information rather than retrieving it — a classic illusion of knowing. They've been passive (re-reading, listening) instead of actively retrieving (self-testing, explaining from memory). Switch to frequent, low-stakes retrieval practice. Use exit tickets, mini-quizzes, and ask students to explain concepts with the notes closed. Spaced repetition over time will improve retention.
+          </div>
+        </div>
+ 
+        <button class="next-btn" onclick="goto('quiz')" style="background:#7dd3fc;color:#0a1520">
+          Take the Knowledge Check
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </section>
+ 
+    <!-- ═══ QUIZ ═══ -->
+    <section class="section" id="sec-quiz">
+      <div class="hero" style="background:linear-gradient(160deg,#080f18 0%,#0d1825 50%,#080f18 100%)">
+        <div class="hero-eyebrow" style="color:#7dd3fc">Knowledge Check</div>
+        <h2>Test your <em style="color:#7dd3fc">understanding</em></h2>
+        <p class="hero-sub">8 questions across all four theories. Choose your answer, then check it. There's no pressure — this is about reflection, not grading.</p>
+      </div>
+ 
+      <div class="content-area">
+        <div class="quiz-wrapper">
+ 
+          <!-- Q1 -->
+          <div class="quiz-q" id="q1">
+            <div class="q-num">Question 1 / 8</div>
+            <div class="q-text">Which psychologist developed the concept of operant conditioning, showing that behavior is shaped by its consequences?</div>
+            <div class="quiz-options">
+              <div class="quiz-option" onclick="selectOpt(this,'q1',false)"><div class="opt-circle">A</div>Ivan Pavlov</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q1',true)"><div class="opt-circle">B</div>B.F. Skinner</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q1',false)"><div class="opt-circle">C</div>Jean Piaget</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q1',false)"><div class="opt-circle">D</div>Lev Vygotsky</div>
+            </div>
+            <button class="check-btn" onclick="checkQ('q1', this)">Check answer</button>
+            <div class="quiz-feedback" id="fb-q1"></div>
+          </div>
+ 
+          <!-- Q2 -->
+          <div class="quiz-q" id="q2">
+            <div class="q-num">Question 2 / 8</div>
+            <div class="q-text">A student modifies their existing understanding of how an engine works after seeing a new type of fuel system they've never encountered before. In Piaget's terms, this is called…</div>
+            <div class="quiz-options">
+              <div class="quiz-option" onclick="selectOpt(this,'q2',false)"><div class="opt-circle">A</div>Assimilation</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q2',true)"><div class="opt-circle">B</div>Accommodation</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q2',false)"><div class="opt-circle">C</div>Equilibration</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q2',false)"><div class="opt-circle">D</div>Scaffolding</div>
+            </div>
+            <button class="check-btn" onclick="checkQ('q2', this)">Check answer</button>
+            <div class="quiz-feedback" id="fb-q2"></div>
+          </div>
+ 
+          <!-- Q3 -->
+          <div class="quiz-q" id="q3">
+            <div class="q-num">Question 3 / 8</div>
+            <div class="q-text">Vygotsky's Zone of Proximal Development (ZPD) describes…</div>
+            <div class="quiz-options">
+              <div class="quiz-option" onclick="selectOpt(this,'q3',false)"><div class="opt-circle">A</div>The area of the brain responsible for language learning</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q3',false)"><div class="opt-circle">B</div>The difference between a student's intelligence and their performance</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q3',true)"><div class="opt-circle">C</div>The gap between what a learner can do independently and what they can do with guidance</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q3',false)"><div class="opt-circle">D</div>The optimal physical environment for learning</div>
+            </div>
+            <button class="check-btn" onclick="checkQ('q3', this)">Check answer</button>
+            <div class="quiz-feedback" id="fb-q3"></div>
+          </div>
+ 
+          <!-- Q4 -->
+          <div class="quiz-q" id="q4">
+            <div class="q-num">Question 4 / 8</div>
+            <div class="q-text">Bloom's Taxonomy is primarily used to…</div>
+            <div class="quiz-options">
+              <div class="quiz-option" onclick="selectOpt(this,'q4',false)"><div class="opt-circle">A</div>Classify types of student motivation</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q4',true)"><div class="opt-circle">B</div>Plan learning objectives at different cognitive levels</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q4',false)"><div class="opt-circle">C</div>Measure classroom behavioral patterns</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q4',false)"><div class="opt-circle">D</div>Organize student groups based on ability</div>
+            </div>
+            <button class="check-btn" onclick="checkQ('q4', this)">Check answer</button>
+            <div class="quiz-feedback" id="fb-q4"></div>
+          </div>
+ 
+          <!-- Q5 -->
+          <div class="quiz-q" id="q5">
+            <div class="q-num">Question 5 / 8</div>
+            <div class="q-text">You want students to develop safety habits that become automatic in the workshop. Which theoretical approach is most directly relevant?</div>
+            <div class="quiz-options">
+              <div class="quiz-option" onclick="selectOpt(this,'q5',true)"><div class="opt-circle">A</div>Behaviorism — consistent reinforcement builds automatic responses</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q5',false)"><div class="opt-circle">B</div>Constructivism — students should discover safety rules themselves</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q5',false)"><div class="opt-circle">C</div>Sociocultural theory — peer discussion develops safety awareness</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q5',false)"><div class="opt-circle">D</div>Cognitivism — advance organizers help students remember safety</div>
+            </div>
+            <button class="check-btn" onclick="checkQ('q5', this)">Check answer</button>
+            <div class="quiz-feedback" id="fb-q5"></div>
+          </div>
+ 
+          <!-- Q6 -->
+          <div class="quiz-q" id="q6">
+            <div class="q-num">Question 6 / 8</div>
+            <div class="q-text">Scaffolding (in Vygotsky's sense) means…</div>
+            <div class="quiz-options">
+              <div class="quiz-option" onclick="selectOpt(this,'q6',false)"><div class="opt-circle">A</div>Giving students a permanent support structure so they always succeed</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q6',false)"><div class="opt-circle">B</div>Breaking content into very small steps that are easy to memorize</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q6',true)"><div class="opt-circle">C</div>Providing temporary support that is gradually removed as competence grows</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q6',false)"><div class="opt-circle">D</div>Using physical models in the classroom to illustrate abstract concepts</div>
+            </div>
+            <button class="check-btn" onclick="checkQ('q6', this)">Check answer</button>
+            <div class="quiz-feedback" id="fb-q6"></div>
+          </div>
+ 
+          <!-- Q7 -->
+          <div class="quiz-q" id="q7">
+            <div class="q-num">Question 7 / 8</div>
+            <div class="q-text">Metacognition refers to…</div>
+            <div class="quiz-options">
+              <div class="quiz-option" onclick="selectOpt(this,'q7',false)"><div class="opt-circle">A</div>A student's ability to memorize large amounts of information</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q7',true)"><div class="opt-circle">B</div>Awareness and monitoring of one's own thinking and learning processes</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q7',false)"><div class="opt-circle">C</div>The speed at which information moves from working to long-term memory</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q7',false)"><div class="opt-circle">D</div>The use of social media in learning contexts</div>
+            </div>
+            <button class="check-btn" onclick="checkQ('q7', this)">Check answer</button>
+            <div class="quiz-feedback" id="fb-q7"></div>
+          </div>
+ 
+          <!-- Q8 -->
+          <div class="quiz-q" id="q8">
+            <div class="q-num">Question 8 / 8</div>
+            <div class="q-text">A vocational teacher begins a lesson on hydraulics by showing students a diagram connecting what they'll learn today to concepts they already know from the previous module. This technique is known as a(n)…</div>
+            <div class="quiz-options">
+              <div class="quiz-option" onclick="selectOpt(this,'q8',false)"><div class="opt-circle">A</div>Behavior contract</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q8',false)"><div class="opt-circle">B</div>Community of practice</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q8',true)"><div class="opt-circle">C</div>Advance organizer</div>
+              <div class="quiz-option" onclick="selectOpt(this,'q8',false)"><div class="opt-circle">D</div>Spiral curriculum</div>
+            </div>
+            <button class="check-btn" onclick="checkQ('q8', this)">Check answer</button>
+            <div class="quiz-feedback" id="fb-q8"></div>
+          </div>
+ 
+          <div class="quiz-score-box" id="quiz-score">
+            <div class="score-big" id="score-display">–/8</div>
+            <div class="score-sub" id="score-msg">Complete all questions to see your score.</div>
+            <button class="start-btn" onclick="goto('summary')" style="margin-top:24px">
+              View My Notes &amp; Summary
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+ 
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ═══ SUMMARY ═══ -->
+    <section class="section" id="sec-summary">
+      <div class="hero" style="background:linear-gradient(160deg,#0f1623 0%,#1a2744 50%,#0f1623 100%)">
+        <div class="hero-eyebrow" style="color:var(--gold)">My Notes & Summary</div>
+        <h2>Your <em style="color:var(--gold)">learning journey</em> so far</h2>
+        <p class="hero-sub">Here are all the reflections you've written. Use them as a starting point for planning your next lesson with these theories in mind.</p>
+      </div>
+ 
+      <div class="content-area">
+        <div class="notes-summary">
+          <div class="theory-color" style="color:var(--behaviorism)">Behaviorism</div>
+          <h3>Reflection on Behaviorism</h3>
+          <div id="note-behav-display" class="no-note">No note saved yet.</div>
+        </div>
+        <div class="notes-summary">
+          <div class="theory-color" style="color:var(--constructivism)">Constructivism</div>
+          <h3>Reflection on Constructivism</h3>
+          <div id="note-const-display" class="no-note">No note saved yet.</div>
+        </div>
+        <div class="notes-summary">
+          <div class="theory-color" style="color:var(--sociocultural)">Sociocultural Theory</div>
+          <h3>Reflection on Sociocultural Theory</h3>
+          <div id="note-socio-display" class="no-note">No note saved yet.</div>
+        </div>
+        <div class="notes-summary">
+          <div class="theory-color" style="color:var(--cognitivism)">Cognitivism</div>
+          <h3>Reflection on Cognitivism</h3>
+          <div id="note-cogn-display" class="no-note">No note saved yet.</div>
+        </div>
+ 
+        <!-- Final takeaway -->
+        <div class="reflection-box" style="margin-top:32px">
+          <div class="ref-eyebrow">✏ Final Reflection</div>
+          <h3>Which theory will you apply first — and how?</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:14px">Based on everything you've read and reflected on: pick one concrete change you'll make in your teaching next week. Be specific.</p>
+          <textarea id="ref-final" placeholder="e.g. I'll start my next lesson with an advance organizer. I'll use scaffolding in the hydraulics lab by giving a full checklist on day 1, then removing one step each week..."></textarea>
+          <br>
+          <button class="save-note-btn" onclick="saveNote('final', this)">Save note</button>
+          <div class="saved-msg" id="saved-final">Saved ✓</div>
+        </div>
+ 
+        <!-- Completion badge -->
+        <div id="completion-box" style="background:linear-gradient(135deg,rgba(78,205,196,0.12),rgba(155,143,232,0.08));border:1px solid rgba(78,205,196,0.2);border-radius:16px;padding:40px;text-align:center;margin-top:28px">
+          <div style="font-size:48px;margin-bottom:16px">🎓</div>
+          <div style="font-family:'DM Serif Display',serif;font-size:26px;color:var(--white);margin-bottom:10px">You've completed the guide.</div>
+          <p style="font-size:15px;color:var(--muted);max-width:480px;margin:0 auto;line-height:1.7">No single theory is the answer — the best teachers use all four as lenses. Keep these ideas close as you plan, and revisit them as your practice develops.</p>
+        </div>
+ 
+      </div>
+    </section>
+ 
+  </main>
+</div>
+ 
+<script>
+  // ── State ──
+  const notes = {};
+  const visited = new Set(['intro']);
+  const quizAnswers = {};
+  let quizScore = 0;
+ 
+  const feedbackTexts = {
+    q1: { correct: "Correct! Skinner developed operant conditioning through his famous 'Skinner box' experiments, showing that consequences shape behavior.", wrong: "Not quite. Pavlov discovered classical conditioning (dogs and bells). Skinner developed operant conditioning — behavior shaped by rewards and punishments." },
+    q2: { correct: "Correct! Accommodation happens when existing schemas must be restructured to fit new, conflicting information.", wrong: "Not quite. Assimilation is when new info fits neatly into an existing schema. Accommodation is when the schema itself must change to handle something that doesn't fit." },
+    q3: { correct: "Exactly right. The ZPD is the space between what a learner can do alone and what they can do with expert support — and that's where teaching has its greatest effect.", wrong: "Not quite. The ZPD describes the gap between a learner's current independent ability and what they can achieve with guidance from a more knowledgeable other." },
+    q4: { correct: "Correct. Bloom's Taxonomy gives teachers a hierarchy of cognitive skills (from Remember to Create) to write learning objectives and design tasks at the right level.", wrong: "Bloom's Taxonomy is a framework for classifying learning objectives by cognitive complexity — from simple recall at the bottom to creating at the top." },
+    q5: { correct: "Exactly. Behaviorism is most powerful for building automatic, consistent habits through clear stimulus-response-reinforcement cycles.", wrong: "While the other theories have some relevance, behaviorism is most directly suited to building automatic safety habits through consistent reinforcement." },
+    q6: { correct: "Correct! Good scaffolding is always designed to be temporary — the goal is student independence, not permanent dependence on support.", wrong: "Scaffolding is temporary support. The key word is 'gradual removal' — the teacher provides structure early and systematically withdraws it as the student develops competence." },
+    q7: { correct: "Exactly. Metacognition — coined by Flavell — is about being aware of and managing your own thinking. It's one of the highest-leverage skills you can teach.", wrong: "Metacognition means 'thinking about thinking.' It's the ability to monitor, evaluate, and regulate your own learning — a key skill for independent learners." },
+    q8: { correct: "Correct! An advance organizer (Ausubel) is a preview that connects new learning to prior knowledge, giving students cognitive hooks for what's coming.", wrong: "This is an advance organizer, introduced by David Ausubel. It's a cognitive tool that helps students connect new content to what they already know before the lesson begins." }
+  };
+ 
+  // ── Navigation ──
+  function goto(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('sec-' + id).classList.add('active');
+    document.getElementById('nav-' + id).classList.add('active');
+    visited.add(id);
+    updateProgress();
+    window.scrollTo(0, 0);
+    if (id === 'summary') updateSummary();
+  }
+ 
+  function updateProgress() {
+    const total = 8; // intro + 4 theories + compare + quiz + summary
+    const pct = Math.round((visited.size / total) * 100);
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-pct').textContent = pct + '%';
+    visited.forEach(v => {
+      const el = document.getElementById('nav-' + v);
+      if (el) el.classList.add('completed');
+    });
+  }
+ 
+  // ── Notes ──
+  function saveNote(key, btn) {
+    const ta = document.getElementById('ref-' + key);
+    if (!ta.value.trim()) return;
+    notes[key] = ta.value.trim();
+    const msg = document.getElementById('saved-' + key);
+    msg.style.opacity = '1';
+    setTimeout(() => { msg.style.opacity = '0'; }, 2000);
+  }
+ 
+  function updateSummary() {
+    const map = { behav: 'behav', const: 'const', socio: 'socio', cogn: 'cogn' };
+    Object.entries(map).forEach(([key, disp]) => {
+      const el = document.getElementById('note-' + disp + '-display');
+      if (notes[key]) {
+        el.className = 'note-text';
+        el.textContent = '"' + notes[key] + '"';
+      }
+    });
+  }
+ 
+  // ── Scenarios ──
+  function toggleReveal(btn) {
+    const reveal = btn.nextElementSibling;
+    if (reveal.classList.contains('show')) {
+      reveal.classList.remove('show');
+      btn.textContent = 'Show analysis ↓';
+    } else {
+      reveal.classList.add('show');
+      btn.textContent = 'Hide analysis ↑';
+    }
+  }
+ 
+  // ── Quiz ──
+  function selectOpt(el, qid, isCorrect) {
+    if (quizAnswers[qid] !== undefined) return;
+    el.dataset.correct = isCorrect;
+    el.classList.add('selected');
+  }
+ 
+  function checkQ(qid, btn) {
+    const opts = document.querySelectorAll('#' + qid + ' .quiz-option');
+    let selected = null;
+    opts.forEach(o => { if (o.classList.contains('selected')) selected = o; });
+    if (!selected) return;
+    if (btn.classList.contains('answered')) return;
+ 
+    const isCorrect = selected.dataset.correct === 'true';
+    quizAnswers[qid] = isCorrect;
+    if (isCorrect) quizScore++;
+ 
+    opts.forEach(o => {
+      if (o.dataset.correct === 'true') o.classList.add('correct');
+      else if (o.classList.contains('selected')) o.classList.add('wrong');
+    });
+ 
+    const fb = document.getElementById('fb-' + qid);
+    fb.className = 'quiz-feedback show ' + (isCorrect ? 'correct' : 'wrong');
+    fb.textContent = feedbackTexts[qid][isCorrect ? 'correct' : 'wrong'];
+ 
+    btn.classList.add('answered');
+    btn.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+ 
+    // Check if all done
+    if (Object.keys(quizAnswers).length === 8) {
+      const box = document.getElementById('quiz-score');
+      box.classList.add('show');
+      document.getElementById('score-display').textContent = quizScore + '/8';
+      const msgs = ['Keep going — re-read the theories and try again!', 'A solid start. Review any questions you missed.', 'Good work! You have a strong foundation.', 'Excellent! You clearly understand all four theories.', 'Perfect score! You\'re ready to apply these in your classroom.'];
+      const idx = quizScore <= 3 ? 0 : quizScore <= 4 ? 1 : quizScore <= 5 ? 2 : quizScore <= 7 ? 3 : 4;
+      document.getElementById('score-msg').textContent = msgs[idx];
+      visited.add('quiz');
+      updateProgress();
+    }
+  }
+ 
+  // init
+  updateProgress();
+</script>
+</body>
+</html>
+ 
