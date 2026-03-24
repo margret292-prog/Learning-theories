@@ -1,5 +1,4 @@
-
-   Learning theories interactive · HTML
+Learning theories interactive · HTML
 Copy
 
 <!DOCTYPE html>
@@ -803,6 +802,97 @@ Copy
   .note-text { font-size: 14px; color: var(--muted); font-style: italic; line-height: 1.6; }
   .no-note { font-size: 13px; color: rgba(255,255,255,0.2); }
  
+  /* ── PERSISTENT NOTES ── */
+  .note-history { margin-top: 14px; }
+ 
+  .note-entry {
+    border-left: 3px solid rgba(255,255,255,0.08);
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    position: relative;
+  }
+ 
+  .note-entry .ne-ts {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+ 
+  .note-entry .ne-ts .ne-badge {
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+ 
+  .note-entry .ne-text {
+    font-size: 14px;
+    color: #c5d0df;
+    line-height: 1.65;
+    font-style: italic;
+  }
+ 
+  .note-entry .ne-del {
+    position: absolute;
+    top: 8px; right: 0;
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+ 
+  .note-entry:hover .ne-del { opacity: 1; }
+  .note-entry .ne-del:hover { color: #f87171; }
+ 
+  .note-history-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 16px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+ 
+  .note-history-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+ 
+  /* Return banner */
+  .return-banner {
+    background: linear-gradient(135deg, rgba(78,205,196,0.12), rgba(78,205,196,0.04));
+    border: 1px solid rgba(78,205,196,0.25);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14px;
+    color: var(--text);
+  }
+ 
+  .return-banner .rb-icon { font-size: 24px; flex-shrink: 0; }
+  .return-banner strong { color: var(--sociocultural); }
+ 
   /* ── TOOLTIP ── */
   [data-tip] { position: relative; cursor: help; border-bottom: 1px dashed var(--muted); }
   [data-tip]:hover::after {
@@ -891,7 +981,98 @@ Copy
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
  
-  /* responsive */
+  /* ── MOBILE HEADER ── */
+  .mobile-header {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 56px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 200;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+  .mobile-header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--white);
+  }
+  .mobile-header-title span { color: var(--sociocultural); }
+  .hamburger {
+    width: 40px; height: 40px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .hamburger span {
+    display: block;
+    width: 18px; height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+ 
+  /* ── SIDEBAR OVERLAY (mobile) ── */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 149;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .sidebar-overlay.open { opacity: 1; }
+ 
+  /* ── BOTTOM NAV (mobile) ── */
+  .bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    z-index: 200;
+    padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
+    justify-content: space-around;
+  }
+  .bnav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    min-width: 44px;
+    border: none;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .bnav-item .bnav-icon { font-size: 20px; line-height: 1; }
+  .bnav-item .bnav-label { font-size: 10px; color: var(--muted); font-weight: 500; }
+  .bnav-item.active .bnav-label { color: var(--sociocultural); }
+ 
+  /* ── TABLET (≤ 900px) ── */
   @media (max-width: 900px) {
     .sidebar { width: 240px; min-width: 240px; }
     .main { margin-left: 240px; }
@@ -900,12 +1081,102 @@ Copy
     .hero h2 { font-size: 38px; }
     .two-col, .welcome-grid { grid-template-columns: 1fr; }
     .concept-grid { grid-template-columns: 1fr 1fr; }
+    .thinker-row { flex-direction: column; }
+  }
+ 
+  /* ── MOBILE (≤ 640px) ── */
+  @media (max-width: 640px) {
+    .mobile-header { display: flex; }
+    .bottom-nav { display: flex; }
+    .sidebar-overlay { display: block; pointer-events: none; }
+    .sidebar {
+      width: 280px; min-width: 280px;
+      transform: translateX(-100%);
+      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+      top: 0; z-index: 150;
+    }
+    .sidebar.drawer-open { transform: translateX(0); }
+    .sidebar-overlay.open { pointer-events: all; }
+    .main { margin-left: 0; padding-top: 56px; padding-bottom: 72px; }
+    .hero { padding: 28px 20px 24px; }
+    .hero-eyebrow { font-size: 10px; margin-bottom: 12px; }
+    .hero h2 { font-size: 26px; line-height: 1.2; margin-bottom: 12px; }
+    .hero-sub { font-size: 14px; margin-bottom: 24px; }
+    .theory-chips { gap: 7px; margin-bottom: 24px; }
+    .chip { font-size: 11px; padding: 5px 12px; }
+    .start-btn { padding: 12px 22px; font-size: 13px; width: 100%; justify-content: center; }
+    .content-area { padding: 20px 16px 24px; max-width: 100%; }
+    .card { padding: 18px 16px; margin-bottom: 14px; }
+    .card p { font-size: 14px; }
+    .two-col, .welcome-grid { grid-template-columns: 1fr; gap: 12px; }
+    .concept-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .concept-pill { padding: 10px 12px; }
+    .concept-pill .pill-label { font-size: 9px; }
+    .concept-pill .pill-def { font-size: 11px; }
+    .pill-hint { font-size: 9px; }
+    .flow-row { flex-direction: column; align-items: stretch; gap: 4px; }
+    .flow-arrow { transform: rotate(90deg); text-align: center; padding: 2px 0; font-size: 20px; }
+    .flow-box { font-size: 12px; padding: 10px 14px; }
+    .thinker-row { flex-direction: column; gap: 10px; }
+    .thinker { padding: 14px; }
+    .tool-row { gap: 10px; padding: 12px 0; }
+    .tool-icon { width: 32px; height: 32px; font-size: 14px; flex-shrink: 0; }
+    .tool-info h4 { font-size: 13px; }
+    .tool-info p { font-size: 12px; }
+    .reflection-box { padding: 20px 16px; }
+    .reflection-box h3 { font-size: 17px; }
+    .next-btn { width: 100%; justify-content: center; font-size: 13px; padding: 13px 20px; }
+    .compare-table { min-width: 560px; }
+    .compare-table th, .compare-table td { padding: 10px 12px; font-size: 12px; }
+    .scenario-card { padding: 18px 16px; }
+    .quiz-q { padding: 20px 16px; }
+    .quiz-option { padding: 11px 14px; font-size: 13px; }
+    .modal {
+      padding: 24px 18px;
+      border-radius: 14px 14px 0 0;
+      margin: 0;
+      max-width: 100%;
+      width: 100%;
+      max-height: 85vh;
+      position: fixed;
+      bottom: 0;
+    }
+    .modal-overlay { align-items: flex-end; }
+    .modal-title { font-size: 22px; }
+    .modal-def { font-size: 14px; }
+    .modal-example { padding: 14px; }
+    .welcome-card { padding: 16px; }
+    .quiz-score-box { padding: 24px 16px; }
+    .score-big { font-size: 48px; }
+    .notes-summary { padding: 20px 16px; }
+    .section-header h2 { font-size: 26px; }
+  }
+ 
+  /* ── SMALL MOBILE (≤ 380px) ── */
+  @media (max-width: 380px) {
+    .concept-grid { grid-template-columns: 1fr; }
+    .hero h2 { font-size: 22px; }
+    .bnav-item .bnav-label { display: none; }
   }
 </style>
 </head>
 <body>
  
 <div class="app">
+ 
+  <!-- MOBILE HEADER -->
+  <header class="mobile-header">
+    <div class="mobile-header-title">Learning <span>Theories</span></div>
+    <div class="mobile-progress">
+      <span id="mob-pct">0%</span>
+    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleDrawer()">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+ 
+  <!-- SIDEBAR OVERLAY -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeDrawer()"></div>
  
   <!-- SIDEBAR -->
   <nav class="sidebar">
@@ -1570,7 +1841,7 @@ Copy
  
       <div class="content-area">
         <!-- Comparison table -->
-        <div class="card" style="padding:0;overflow:auto">
+        <div class="card" style="padding:0;overflow-x:auto;-webkit-overflow-scrolling:touch">
           <table class="compare-table">
             <thead>
               <tr>
@@ -1820,39 +2091,69 @@ Copy
     <!-- ═══ SUMMARY ═══ -->
     <section class="section" id="sec-summary">
       <div class="hero" style="background:linear-gradient(160deg,#0f1623 0%,#1a2744 50%,#0f1623 100%)">
-        <div class="hero-eyebrow" style="color:var(--gold)">My Notes & Summary</div>
+        <div class="hero-eyebrow" style="color:var(--gold)">My Notes &amp; Summary</div>
         <h2>Your <em style="color:var(--gold)">learning journey</em> so far</h2>
-        <p class="hero-sub">Here are all the reflections you've written. Use them as a starting point for planning your next lesson with these theories in mind.</p>
+        <p class="hero-sub">All your reflections — saved across sessions. Your notes are stored in this browser and will be here next time you return.</p>
       </div>
  
       <div class="content-area">
-        <div class="notes-summary">
-          <div class="theory-color" style="color:var(--behaviorism)">Behaviorism</div>
-          <h3>Reflection on Behaviorism</h3>
-          <div id="note-behav-display" class="no-note">No note saved yet.</div>
-        </div>
-        <div class="notes-summary">
-          <div class="theory-color" style="color:var(--constructivism)">Constructivism</div>
-          <h3>Reflection on Constructivism</h3>
-          <div id="note-const-display" class="no-note">No note saved yet.</div>
-        </div>
-        <div class="notes-summary">
-          <div class="theory-color" style="color:var(--sociocultural)">Sociocultural Theory</div>
-          <h3>Reflection on Sociocultural Theory</h3>
-          <div id="note-socio-display" class="no-note">No note saved yet.</div>
-        </div>
-        <div class="notes-summary">
-          <div class="theory-color" style="color:var(--cognitivism)">Cognitivism</div>
-          <h3>Reflection on Cognitivism</h3>
-          <div id="note-cogn-display" class="no-note">No note saved yet.</div>
+ 
+        <!-- Storage status bar -->
+        <div id="storage-banner" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.2);border-radius:10px;margin-bottom:24px;font-size:13px;color:var(--muted)">
+          <span style="font-size:16px">💾</span>
+          <span id="storage-status">Notes are saved in your browser — they will be here next time you open this page.</span>
+          <button onclick="clearAllData()" style="margin-left:auto;padding:5px 12px;border-radius:6px;border:1px solid rgba(248,113,113,0.3);background:rgba(248,113,113,0.08);color:#f87171;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap">Clear all data</button>
         </div>
  
-        <!-- Final takeaway -->
+        <!-- Per-theory note cards -->
+        <div class="notes-summary" id="ns-behav">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <div class="theory-color" style="color:var(--behaviorism);margin-bottom:0">Behaviorism</div>
+            <span class="note-ts" id="ts-behav" style="font-size:11px;color:var(--muted)"></span>
+          </div>
+          <h3>Reflection on Behaviorism</h3>
+          <div id="note-behav-display" class="no-note">No note saved yet.</div>
+          <div id="note-behav-history" class="note-history"></div>
+        </div>
+ 
+        <div class="notes-summary" id="ns-const">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <div class="theory-color" style="color:var(--constructivism);margin-bottom:0">Constructivism</div>
+            <span class="note-ts" id="ts-const" style="font-size:11px;color:var(--muted)"></span>
+          </div>
+          <h3>Reflection on Constructivism</h3>
+          <div id="note-const-display" class="no-note">No note saved yet.</div>
+          <div id="note-const-history" class="note-history"></div>
+        </div>
+ 
+        <div class="notes-summary" id="ns-socio">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <div class="theory-color" style="color:var(--sociocultural);margin-bottom:0">Sociocultural Theory</div>
+            <span class="note-ts" id="ts-socio" style="font-size:11px;color:var(--muted)"></span>
+          </div>
+          <h3>Reflection on Sociocultural Theory</h3>
+          <div id="note-socio-display" class="no-note">No note saved yet.</div>
+          <div id="note-socio-history" class="note-history"></div>
+        </div>
+ 
+        <div class="notes-summary" id="ns-cogn">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <div class="theory-color" style="color:var(--cognitivism);margin-bottom:0">Cognitivism</div>
+            <span class="note-ts" id="ts-cogn" style="font-size:11px;color:var(--muted)"></span>
+          </div>
+          <h3>Reflection on Cognitivism</h3>
+          <div id="note-cogn-display" class="no-note">No note saved yet.</div>
+          <div id="note-cogn-history" class="note-history"></div>
+        </div>
+ 
+        <!-- Final reflection -->
         <div class="reflection-box" style="margin-top:32px">
           <div class="ref-eyebrow">✏ Final Reflection</div>
           <h3>Which theory will you apply first — and how?</h3>
           <p style="font-size:14px;color:var(--muted);margin-bottom:14px">Based on everything you've read and reflected on: pick one concrete change you'll make in your teaching next week. Be specific.</p>
-          <textarea id="ref-final" placeholder="e.g. I'll start my next lesson with an advance organizer. I'll use scaffolding in the hydraulics lab by giving a full checklist on day 1, then removing one step each week..."></textarea>
+          <div id="note-final-display" class="no-note" style="margin-bottom:12px">No note saved yet.</div>
+          <div id="note-final-history" class="note-history" style="margin-bottom:14px"></div>
+          <textarea id="ref-final" placeholder="e.g. I'll start my next lesson with an advance organizer…"></textarea>
           <br>
           <button class="save-note-btn" onclick="saveNote('final', this)">Save note</button>
           <div class="saved-msg" id="saved-final">Saved ✓</div>
@@ -1867,6 +2168,42 @@ Copy
  
       </div>
     </section>
+ 
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="bnav-item active" onclick="goto('intro')" id="bnav-intro">
+      <span class="bnav-icon">🏠</span>
+      <span class="bnav-label">Home</span>
+    </button>
+    <button class="bnav-item" onclick="goto('behaviorism')" id="bnav-behaviorism">
+      <span class="bnav-icon">🧠</span>
+      <span class="bnav-label">Behav.</span>
+    </button>
+    <button class="bnav-item" onclick="goto('constructivism')" id="bnav-constructivism">
+      <span class="bnav-icon">🔨</span>
+      <span class="bnav-label">Constr.</span>
+    </button>
+    <button class="bnav-item" onclick="goto('sociocultural')" id="bnav-sociocultural">
+      <span class="bnav-icon">🤝</span>
+      <span class="bnav-label">Socio.</span>
+    </button>
+    <button class="bnav-item" onclick="goto('cognitivism')" id="bnav-cognitivism">
+      <span class="bnav-icon">⚙️</span>
+      <span class="bnav-label">Cogn.</span>
+    </button>
+    <button class="bnav-item" onclick="goto('compare')" id="bnav-compare">
+      <span class="bnav-icon">📊</span>
+      <span class="bnav-label">Compare</span>
+    </button>
+    <button class="bnav-item" onclick="goto('quiz')" id="bnav-quiz">
+      <span class="bnav-icon">✅</span>
+      <span class="bnav-label">Quiz</span>
+    </button>
+    <button class="bnav-item" onclick="goto('summary')" id="bnav-summary">
+      <span class="bnav-icon">📝</span>
+      <span class="bnav-label">Notes</span>
+    </button>
+  </nav>
  
   </main>
 </div>
@@ -1884,11 +2221,60 @@ Copy
 </div>
  
 <script>
-  // ── State ──
-  const notes = {};
-  const visited = new Set(['intro']);
-  const quizAnswers = {};
-  let quizScore = 0;
+  // ── localStorage helpers ──
+  const LS_KEY = 'lt_data_v1';
+ 
+  function loadStorage() {
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch(e) { return {}; }
+  }
+ 
+  function saveStorage(data) {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
+  }
+ 
+  // ── State (loaded from localStorage) ──
+  let _store = loadStorage();
+ 
+  // notes: { key: [ { text, ts, session } ] }
+  const notes = _store.notes || {};
+  // visited: array of section ids
+  const visited = new Set(_store.visited || ['intro']);
+  // quiz
+  const quizAnswers = _store.quizAnswers || {};
+  let quizScore = _store.quizScore || 0;
+ 
+  // session id: timestamp of first visit in this session
+  const SESSION_ID = (() => {
+    if (_store.currentSession) return _store.currentSession;
+    const id = Date.now();
+    _store.currentSession = id;
+    saveStorage(_store);
+    return id;
+  })();
+ 
+  function persist() {
+    _store.notes       = notes;
+    _store.visited     = Array.from(visited);
+    _store.quizAnswers = quizAnswers;
+    _store.quizScore   = quizScore;
+    _store.currentSession = SESSION_ID;
+    saveStorage(_store);
+  }
+ 
+  function fmtDate(ts) {
+    const d = new Date(ts);
+    return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' })
+      + ' · ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+  }
+ 
+  function isNewSession(ts) {
+    // a note belongs to this session if its ts is within the SESSION_ID window
+    // SESSION_ID is set once per browser session; notes from earlier sessions differ
+    return ts >= SESSION_ID;
+  }
  
   // ── Concept data ──
   const CONCEPTS = {
@@ -2166,15 +2552,35 @@ Copy
     q8: { correct: "Correct! An advance organizer (Ausubel) is a preview that connects new learning to prior knowledge, giving students cognitive hooks for what's coming.", wrong: "This is an advance organizer, introduced by David Ausubel. It's a cognitive tool that helps students connect new content to what they already know before the lesson begins." }
   };
  
+  // ── Drawer ──
+  function toggleDrawer() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const burger  = document.getElementById('hamburger');
+    const open = sidebar.classList.toggle('drawer-open');
+    overlay.classList.toggle('open', open);
+    burger.classList.toggle('open', open);
+  }
+ 
+  function closeDrawer() {
+    document.querySelector('.sidebar').classList.remove('drawer-open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+ 
   // ── Navigation ──
   function goto(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.bnav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('sec-' + id).classList.add('active');
     document.getElementById('nav-' + id).classList.add('active');
+    const bnav = document.getElementById('bnav-' + id);
+    if (bnav) bnav.classList.add('active');
     visited.add(id);
     updateProgress();
     window.scrollTo(0, 0);
+    closeDrawer();
     if (id === 'summary') updateSummary();
   }
  
@@ -2183,31 +2589,111 @@ Copy
     const pct = Math.round((visited.size / total) * 100);
     document.getElementById('prog-fill').style.width = pct + '%';
     document.getElementById('prog-pct').textContent = pct + '%';
+    const mobPct = document.getElementById('mob-pct');
+    if (mobPct) mobPct.textContent = pct + '%';
     visited.forEach(v => {
       const el = document.getElementById('nav-' + v);
       if (el) el.classList.add('completed');
+      const bnav = document.getElementById('bnav-' + v);
+      // no completed style on bottom nav, just active
     });
+    persist();
   }
  
   // ── Notes ──
   function saveNote(key, btn) {
     const ta = document.getElementById('ref-' + key);
-    if (!ta.value.trim()) return;
-    notes[key] = ta.value.trim();
+    const text = ta.value.trim();
+    if (!text) return;
+ 
+    if (!notes[key]) notes[key] = [];
+    notes[key].push({ text, ts: Date.now(), session: SESSION_ID });
+    persist();
+ 
+    // Clear textarea after saving
+    ta.value = '';
+ 
     const msg = document.getElementById('saved-' + key);
     msg.style.opacity = '1';
     setTimeout(() => { msg.style.opacity = '0'; }, 2000);
+ 
+    // Live-update summary if open
+    renderNoteEntry(key);
+  }
+ 
+  function deleteNote(key, idx) {
+    if (!notes[key]) return;
+    notes[key].splice(idx, 1);
+    persist();
+    renderNoteEntry(key);
+  }
+ 
+  function renderNoteEntry(key) {
+    const entries = notes[key] || [];
+    const dispEl   = document.getElementById('note-' + key + '-display');
+    const histEl   = document.getElementById('note-' + key + '-history');
+    const tsEl     = document.getElementById('ts-' + key);
+ 
+    if (!dispEl) return;
+ 
+    if (entries.length === 0) {
+      dispEl.className = 'no-note';
+      dispEl.textContent = 'No note saved yet.';
+      if (histEl) histEl.innerHTML = '';
+      if (tsEl) tsEl.textContent = '';
+      return;
+    }
+ 
+    // Latest note shown prominently
+    const latest = entries[entries.length - 1];
+    dispEl.className = 'note-text';
+    dispEl.textContent = '"'  + latest.text + '"';
+    if (tsEl) tsEl.textContent = fmtDate(latest.ts);
+ 
+    // Older notes in history
+    if (!histEl) return;
+    const older = entries.slice(0, -1);
+    if (older.length === 0) { histEl.innerHTML = ''; return; }
+ 
+    let html = '<div class="note-history-label">Previous entries</div>';
+    older.forEach((e, i) => {
+      const badge = isNewSession(e.ts) ? 'This session' : 'Previous session';
+      const badgeColor = isNewSession(e.ts) ? 'rgba(78,205,196,0.15);color:var(--sociocultural)' : 'rgba(255,255,255,0.06);color:var(--muted)';
+      html += `<div class="note-entry">
+        <div class="ne-ts">
+          <span class="ne-badge" style="background:${badgeColor}">${badge}</span>
+          ${fmtDate(e.ts)}
+        </div>
+        <div class="ne-text">"${e.text}"</div>
+        <button class="ne-del" onclick="deleteNote('${key}', ${i})" title="Delete this entry">✕</button>
+      </div>`;
+    });
+    histEl.innerHTML = html;
+  }
+ 
+  function clearAllData() {
+    if (!confirm('Clear all saved notes and progress? This cannot be undone.')) return;
+    localStorage.removeItem(LS_KEY);
+    location.reload();
   }
  
   function updateSummary() {
-    const map = { behav: 'behav', const: 'const', socio: 'socio', cogn: 'cogn' };
-    Object.entries(map).forEach(([key, disp]) => {
-      const el = document.getElementById('note-' + disp + '-display');
-      if (notes[key]) {
-        el.className = 'note-text';
-        el.textContent = '"' + notes[key] + '"';
-      }
+    ['behav', 'const', 'socio', 'cogn', 'final'].forEach(key => renderNoteEntry(key));
+  }
+ 
+  // Restore textarea content if there was an unsaved draft (autosave)
+  function autosave(key) {
+    const ta = document.getElementById('ref-' + key);
+    if (!ta) return;
+    const draftKey = LS_KEY + '_draft_' + key;
+    ta.addEventListener('input', () => {
+      try { localStorage.setItem(draftKey, ta.value); } catch(e) {}
     });
+    // Restore draft
+    try {
+      const draft = localStorage.getItem(draftKey);
+      if (draft) ta.value = draft;
+    } catch(e) {}
   }
  
   // ── Scenarios ──
@@ -2262,22 +2748,77 @@ Copy
       visited.add('quiz');
       updateProgress();
     }
+    persist();
   }
  
-  // init
+  // ── Restore quiz UI from saved state ──
+  function restoreQuiz() {
+    Object.entries(quizAnswers).forEach(([qid, isCorrect]) => {
+      const qEl = document.getElementById(qid);
+      if (!qEl) return;
+      const opts = qEl.querySelectorAll('.quiz-option');
+      opts.forEach(o => {
+        const oCorrect = o.dataset.correct === 'true';
+        if (oCorrect) o.classList.add('correct');
+        else if (!isCorrect && o.classList.contains('selected')) o.classList.add('wrong');
+      });
+      const btn = qEl.querySelector('.check-btn');
+      if (btn) {
+        btn.classList.add('answered');
+        btn.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+      }
+      const fb = document.getElementById('fb-' + qid);
+      if (fb && feedbackTexts[qid]) {
+        fb.className = 'quiz-feedback show ' + (isCorrect ? 'correct' : 'wrong');
+        fb.textContent = feedbackTexts[qid][isCorrect ? 'correct' : 'wrong'];
+      }
+    });
+    if (Object.keys(quizAnswers).length === 8) {
+      const box = document.getElementById('quiz-score');
+      if (box) box.classList.add('show');
+      const scoreEl = document.getElementById('score-display');
+      if (scoreEl) scoreEl.textContent = quizScore + '/8';
+      const msgs = ['Keep going — re-read the theories and try again!', 'A solid start. Review any questions you missed.', 'Good work! You have a strong foundation.', 'Excellent! You clearly understand all four theories.', 'Perfect score! You\'re ready to apply these in your classroom.'];
+      const idx = quizScore <= 3 ? 0 : quizScore <= 4 ? 1 : quizScore <= 5 ? 2 : quizScore <= 7 ? 3 : 4;
+      const msgEl = document.getElementById('score-msg');
+      if (msgEl) msgEl.textContent = msgs[idx];
+    }
+  }
+ 
+  // ── Show return-visitor banner if they have previous notes ──
+  function showReturnBanner() {
+    const hasNotes = ['behav','const','socio','cogn','final'].some(k => notes[k] && notes[k].length > 0);
+    const prevSessions = ['behav','const','socio','cogn','final']
+      .flatMap(k => (notes[k] || []))
+      .filter(e => !isNewSession(e.ts));
+    if (prevSessions.length > 0) {
+      // Show welcome-back banner on intro
+      const intro = document.getElementById('sec-intro');
+      if (!intro) return;
+      const banner = document.createElement('div');
+      banner.className = 'return-banner';
+      banner.innerHTML = `<span class="rb-icon">👋</span><div><strong>Welcome back!</strong> You have notes from a previous session. Head to <button onclick="goto('summary')" style="background:none;border:none;color:var(--sociocultural);font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;padding:0;text-decoration:underline">My Notes &amp; Summary</button> to review them.</div>`;
+      const contentArea = intro.querySelector('.content-area');
+      if (contentArea) contentArea.insertBefore(banner, contentArea.firstChild);
+    }
+  }
+ 
+  // ── INIT ──
+  // Setup autosave drafts
+  ['behav','const','socio','cogn','final'].forEach(k => autosave(k));
+ 
+  // Restore quiz UI
+  restoreQuiz();
+ 
+  // Restore visited nav marks
   updateProgress();
+ 
+  // Render any existing notes in summary (in case summary is visited first)
+  updateSummary();
+ 
+  // Welcome back banner
+  showReturnBanner();
 </script>
 </body>
 </html>
- 
    
-
-  
-
- 
-   
-     
-           
-         
-
-         
