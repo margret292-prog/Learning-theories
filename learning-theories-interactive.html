@@ -1,6 +1,3 @@
-Learning theories interactive · HTML
-Copy
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,9 +20,9 @@ Copy
     --gold: #f7c948;
     --white: #ffffff;
   }
- 
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
- 
+
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--bg);
@@ -33,10 +30,10 @@ Copy
     min-height: 100vh;
     overflow-x: hidden;
   }
- 
+
   /* ── LAYOUT ── */
   .app { display: flex; min-height: 100vh; }
- 
+
   /* ── SIDEBAR ── */
   .sidebar {
     width: 280px;
@@ -50,12 +47,12 @@ Copy
     z-index: 100;
     overflow-y: auto;
   }
- 
+
   .sidebar-logo {
     padding: 28px 24px 20px;
     border-bottom: 1px solid var(--border);
   }
- 
+
   .sidebar-logo .eyebrow {
     font-size: 10px;
     font-weight: 600;
@@ -64,22 +61,22 @@ Copy
     text-transform: uppercase;
     margin-bottom: 6px;
   }
- 
+
   .sidebar-logo h1 {
     font-family: 'DM Serif Display', serif;
     font-size: 17px;
     line-height: 1.3;
     color: var(--white);
   }
- 
+
   .sidebar-logo h1 span { color: var(--sociocultural); }
- 
+
   /* Progress bar */
   .progress-section {
     padding: 18px 24px;
     border-bottom: 1px solid var(--border);
   }
- 
+
   .progress-label {
     display: flex;
     justify-content: space-between;
@@ -88,14 +85,14 @@ Copy
     margin-bottom: 8px;
     font-weight: 500;
   }
- 
+
   .progress-bar {
     height: 4px;
     background: rgba(255,255,255,0.08);
     border-radius: 2px;
     overflow: hidden;
   }
- 
+
   .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--sociocultural), #7ee8e2);
@@ -103,7 +100,7 @@ Copy
     transition: width 0.5s ease;
     width: 0%;
   }
- 
+
   /* Nav sections */
   .nav-section { padding: 16px 0; border-bottom: 1px solid var(--border); }
   .nav-section-label {
@@ -114,7 +111,7 @@ Copy
     color: var(--muted);
     text-transform: uppercase;
   }
- 
+
   .nav-item {
     display: flex;
     align-items: center;
@@ -128,11 +125,11 @@ Copy
     font-weight: 400;
     user-select: none;
   }
- 
+
   .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
   .nav-item.active { border-left-color: var(--accent-color, var(--sociocultural)); color: var(--text); background: rgba(255,255,255,0.05); font-weight: 500; }
   .nav-item.completed { color: var(--text); }
- 
+
   .nav-dot {
     width: 8px; height: 8px;
     border-radius: 50%;
@@ -142,16 +139,16 @@ Copy
   }
   .nav-item.active .nav-dot { box-shadow: 0 0 0 3px rgba(78,205,196,0.25); }
   .nav-item.completed .nav-dot { background: var(--accent-color); }
- 
+
   .nav-check { font-size: 11px; color: var(--sociocultural); margin-left: auto; opacity: 0; transition: opacity 0.3s; }
   .nav-item.completed .nav-check { opacity: 1; }
- 
+
   /* ── MAIN CONTENT ── */
   .main { margin-left: 280px; flex: 1; }
- 
+
   .section { display: none; min-height: 100vh; }
   .section.active { display: block; }
- 
+
   /* ── HERO / INTRO ── */
   .hero {
     background: linear-gradient(160deg, #0f1623 0%, #1a2744 50%, #0f1623 100%);
@@ -159,7 +156,7 @@ Copy
     position: relative;
     overflow: hidden;
   }
- 
+
   .hero::before {
     content: '';
     position: absolute;
@@ -168,7 +165,7 @@ Copy
     background: radial-gradient(circle, rgba(78,205,196,0.08) 0%, transparent 70%);
     pointer-events: none;
   }
- 
+
   .hero::after {
     content: '';
     position: absolute;
@@ -177,7 +174,7 @@ Copy
     background: radial-gradient(circle, rgba(155,143,232,0.07) 0%, transparent 70%);
     pointer-events: none;
   }
- 
+
   .hero-eyebrow {
     font-size: 11px;
     font-weight: 600;
@@ -186,7 +183,7 @@ Copy
     text-transform: uppercase;
     margin-bottom: 20px;
   }
- 
+
   .hero h2 {
     font-family: 'DM Serif Display', serif;
     font-size: 52px;
@@ -195,9 +192,9 @@ Copy
     margin-bottom: 20px;
     max-width: 600px;
   }
- 
+
   .hero h2 em { font-style: italic; color: var(--gold); }
- 
+
   .hero-sub {
     font-size: 16px;
     color: var(--muted);
@@ -205,14 +202,14 @@ Copy
     line-height: 1.7;
     margin-bottom: 36px;
   }
- 
+
   .theory-chips {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
     margin-bottom: 40px;
   }
- 
+
   .chip {
     padding: 6px 16px;
     border-radius: 20px;
@@ -222,9 +219,9 @@ Copy
     cursor: pointer;
     transition: all 0.2s;
   }
- 
+
   .chip:hover { opacity: 0.85; transform: translateY(-1px); }
- 
+
   .start-btn {
     display: inline-flex;
     align-items: center;
@@ -240,24 +237,24 @@ Copy
     transition: all 0.2s;
     letter-spacing: 0.3px;
   }
- 
+
   .start-btn:hover { background: #5de0d6; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(78,205,196,0.25); }
   .start-btn svg { transition: transform 0.2s; }
   .start-btn:hover svg { transform: translateX(3px); }
- 
+
   /* ── CONTENT BLOCKS ── */
   .content-area {
     padding: 52px 64px;
     max-width: 900px;
   }
- 
+
   .section-header {
     display: flex;
     align-items: center;
     gap: 16px;
     margin-bottom: 36px;
   }
- 
+
   .theory-badge {
     width: 48px; height: 48px;
     border-radius: 12px;
@@ -267,7 +264,7 @@ Copy
     font-size: 22px;
     flex-shrink: 0;
   }
- 
+
   .section-header-text .num {
     font-size: 11px;
     font-weight: 600;
@@ -275,16 +272,16 @@ Copy
     text-transform: uppercase;
     margin-bottom: 4px;
   }
- 
+
   .section-header-text h2 {
     font-family: 'DM Serif Display', serif;
     font-size: 34px;
     color: var(--white);
     line-height: 1.1;
   }
- 
+
   .section-header-text h2 span { font-style: italic; }
- 
+
   /* Cards */
   .card {
     background: var(--surface);
@@ -293,7 +290,7 @@ Copy
     padding: 28px;
     margin-bottom: 20px;
   }
- 
+
   .card-title {
     font-size: 12px;
     font-weight: 600;
@@ -301,9 +298,9 @@ Copy
     text-transform: uppercase;
     margin-bottom: 14px;
   }
- 
+
   .card p { font-size: 15px; line-height: 1.75; color: #c5d0df; }
- 
+
   /* Two-col grid */
   .two-col {
     display: grid;
@@ -311,7 +308,7 @@ Copy
     gap: 16px;
     margin-bottom: 20px;
   }
- 
+
   /* Concept pills */
   .concept-grid {
     display: grid;
@@ -319,7 +316,7 @@ Copy
     gap: 10px;
     margin: 16px 0;
   }
- 
+
   .concept-pill {
     background: var(--surface2);
     border: 1px solid var(--border);
@@ -332,15 +329,15 @@ Copy
     position: relative;
     user-select: none;
   }
- 
+
   .concept-pill:hover {
     transform: translateY(-2px);
     border-color: rgba(255,255,255,0.2);
     box-shadow: 0 6px 18px rgba(0,0,0,0.3);
   }
- 
+
   .concept-pill:hover .pill-hint { opacity: 1; }
- 
+
   .concept-pill .pill-label {
     font-size: 10px;
     font-weight: 600;
@@ -351,9 +348,9 @@ Copy
     align-items: center;
     justify-content: space-between;
   }
- 
+
   .concept-pill .pill-def { font-size: 12px; color: var(--muted); line-height: 1.5; }
- 
+
   .pill-hint {
     font-size: 10px;
     color: var(--muted);
@@ -362,13 +359,13 @@ Copy
     transition: opacity 0.15s;
     font-style: italic;
   }
- 
+
   .pill-click-icon {
     font-size: 10px;
     opacity: 0.45;
     flex-shrink: 0;
   }
- 
+
   /* ── MODAL ── */
   .modal-overlay {
     position: fixed;
@@ -384,12 +381,12 @@ Copy
     pointer-events: none;
     transition: opacity 0.22s ease;
   }
- 
+
   .modal-overlay.open {
     opacity: 1;
     pointer-events: all;
   }
- 
+
   .modal {
     background: var(--surface);
     border: 1px solid rgba(255,255,255,0.12);
@@ -404,11 +401,11 @@ Copy
     max-height: 90vh;
     overflow-y: auto;
   }
- 
+
   .modal-overlay.open .modal {
     transform: translateY(0) scale(1);
   }
- 
+
   .modal-close {
     position: absolute;
     top: 16px; right: 16px;
@@ -424,7 +421,7 @@ Copy
     line-height: 1;
   }
   .modal-close:hover { color: var(--white); border-color: rgba(255,255,255,0.2); }
- 
+
   .modal-tag {
     font-size: 10px;
     font-weight: 600;
@@ -435,7 +432,7 @@ Copy
     padding: 3px 10px;
     border-radius: 20px;
   }
- 
+
   .modal-title {
     font-family: 'DM Serif Display', serif;
     font-size: 26px;
@@ -443,7 +440,7 @@ Copy
     margin-bottom: 10px;
     line-height: 1.2;
   }
- 
+
   .modal-def {
     font-size: 15px;
     color: #c5d0df;
@@ -452,7 +449,7 @@ Copy
     padding-bottom: 22px;
     border-bottom: 1px solid var(--border);
   }
- 
+
   .modal-example-label {
     font-size: 10px;
     font-weight: 600;
@@ -464,14 +461,14 @@ Copy
     align-items: center;
     gap: 8px;
   }
- 
+
   .modal-example-label::after {
     content: '';
     flex: 1;
     height: 1px;
     background: var(--border);
   }
- 
+
   .modal-example {
     background: var(--surface2);
     border-radius: 10px;
@@ -479,26 +476,26 @@ Copy
     margin-bottom: 12px;
     border-left: 3px solid var(--modal-color, var(--sociocultural));
   }
- 
+
   .modal-example .ex-scenario {
     font-size: 13px;
     font-weight: 600;
     color: var(--white);
     margin-bottom: 6px;
   }
- 
+
   .modal-example .ex-text {
     font-size: 13px;
     color: #a8bbd0;
     line-height: 1.65;
   }
- 
+
   .modal-example .ex-icon {
     font-size: 18px;
     margin-bottom: 8px;
     display: block;
   }
- 
+
   /* Practical tools */
   .tool-row {
     display: flex;
@@ -507,9 +504,9 @@ Copy
     padding: 14px 0;
     border-bottom: 1px solid var(--border);
   }
- 
+
   .tool-row:last-child { border-bottom: none; }
- 
+
   .tool-icon {
     width: 36px; height: 36px;
     border-radius: 8px;
@@ -520,10 +517,10 @@ Copy
     flex-shrink: 0;
     background: var(--surface2);
   }
- 
+
   .tool-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
   .tool-info p { font-size: 13px; color: var(--muted); line-height: 1.55; }
- 
+
   /* ── REFLECTION ── */
   .reflection-box {
     background: linear-gradient(135deg, rgba(247,201,72,0.08), rgba(247,201,72,0.03));
@@ -532,7 +529,7 @@ Copy
     padding: 28px;
     margin: 24px 0;
   }
- 
+
   .reflection-box .ref-eyebrow {
     font-size: 11px;
     font-weight: 600;
@@ -541,14 +538,14 @@ Copy
     color: var(--gold);
     margin-bottom: 12px;
   }
- 
+
   .reflection-box h3 {
     font-family: 'DM Serif Display', serif;
     font-size: 20px;
     color: var(--white);
     margin-bottom: 16px;
   }
- 
+
   .reflection-box textarea {
     width: 100%;
     background: rgba(255,255,255,0.05);
@@ -563,10 +560,10 @@ Copy
     line-height: 1.6;
     transition: border-color 0.2s;
   }
- 
+
   .reflection-box textarea:focus { outline: none; border-color: rgba(247,201,72,0.4); }
   .reflection-box textarea::placeholder { color: var(--muted); }
- 
+
   .save-note-btn {
     margin-top: 10px;
     padding: 8px 18px;
@@ -580,13 +577,13 @@ Copy
     transition: all 0.2s;
     font-family: 'DM Sans', sans-serif;
   }
- 
+
   .save-note-btn:hover { background: rgba(247,201,72,0.25); }
   .saved-msg { font-size: 12px; color: var(--gold); margin-top: 8px; opacity: 0; transition: opacity 0.3s; }
- 
+
   /* ── QUIZ ── */
   .quiz-wrapper { max-width: 680px; }
- 
+
   .quiz-q {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -594,7 +591,7 @@ Copy
     padding: 28px;
     margin-bottom: 16px;
   }
- 
+
   .quiz-q .q-num {
     font-size: 11px;
     font-weight: 600;
@@ -603,7 +600,7 @@ Copy
     color: var(--muted);
     margin-bottom: 10px;
   }
- 
+
   .quiz-q .q-text {
     font-size: 16px;
     font-weight: 500;
@@ -611,9 +608,9 @@ Copy
     margin-bottom: 18px;
     line-height: 1.55;
   }
- 
+
   .quiz-options { display: flex; flex-direction: column; gap: 8px; }
- 
+
   .quiz-option {
     display: flex;
     align-items: center;
@@ -628,12 +625,12 @@ Copy
     color: var(--text);
     user-select: none;
   }
- 
+
   .quiz-option:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); }
   .quiz-option.selected { border-color: var(--q-color, var(--sociocultural)); background: rgba(78,205,196,0.08); }
   .quiz-option.correct { border-color: #4ade80; background: rgba(74,222,128,0.08); color: #4ade80; }
   .quiz-option.wrong { border-color: #f87171; background: rgba(248,113,113,0.08); color: #f87171; }
- 
+
   .opt-circle {
     width: 22px; height: 22px;
     border-radius: 50%;
@@ -645,11 +642,11 @@ Copy
     font-size: 11px;
     font-weight: 600;
   }
- 
+
   .quiz-option.selected .opt-circle { border-color: var(--sociocultural); background: rgba(78,205,196,0.2); }
   .quiz-option.correct .opt-circle { border-color: #4ade80; background: rgba(74,222,128,0.2); }
   .quiz-option.wrong .opt-circle { border-color: #f87171; }
- 
+
   .quiz-feedback {
     font-size: 13px;
     padding: 10px 14px;
@@ -661,7 +658,7 @@ Copy
   .quiz-feedback.show { display: block; }
   .quiz-feedback.correct { background: rgba(74,222,128,0.08); color: #86efac; border: 1px solid rgba(74,222,128,0.2); }
   .quiz-feedback.wrong { background: rgba(248,113,113,0.08); color: #fca5a5; border: 1px solid rgba(248,113,113,0.2); }
- 
+
   /* Quiz submit / score */
   .check-btn {
     padding: 12px 26px;
@@ -678,7 +675,7 @@ Copy
   }
   .check-btn:hover { background: rgba(255,255,255,0.08); }
   .check-btn.answered { opacity: 0.5; cursor: default; }
- 
+
   .quiz-score-box {
     background: linear-gradient(135deg, rgba(78,205,196,0.1), rgba(78,205,196,0.03));
     border: 1px solid rgba(78,205,196,0.2);
@@ -688,14 +685,14 @@ Copy
     margin-top: 24px;
     display: none;
   }
- 
+
   .quiz-score-box.show { display: block; }
   .score-big { font-family: 'DM Serif Display', serif; font-size: 60px; color: var(--white); }
   .score-sub { color: var(--muted); font-size: 15px; margin-top: 8px; }
- 
+
   /* ── COMPARISON TABLE ── */
   .compare-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
- 
+
   .compare-table th {
     padding: 14px 16px;
     text-align: left;
@@ -704,7 +701,7 @@ Copy
     letter-spacing: 1px;
     text-transform: uppercase;
   }
- 
+
   .compare-table td {
     padding: 13px 16px;
     border-top: 1px solid var(--border);
@@ -712,12 +709,12 @@ Copy
     line-height: 1.5;
     vertical-align: top;
   }
- 
+
   .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
- 
+
   .th-label { background: var(--surface); }
   .td-label { font-weight: 600; color: var(--text); background: rgba(255,255,255,0.02); }
- 
+
   /* ── NEXT BUTTON ── */
   .next-btn {
     display: inline-flex;
@@ -733,11 +730,11 @@ Copy
     transition: all 0.2s;
     margin-top: 36px;
   }
- 
+
   .next-btn:hover { transform: translateY(-1px); }
   .next-btn svg { transition: transform 0.2s; }
   .next-btn:hover svg { transform: translateX(3px); }
- 
+
   /* ── SCENARIO CARDS ── */
   .scenario-card {
     background: var(--surface);
@@ -746,7 +743,7 @@ Copy
     padding: 24px;
     margin-bottom: 14px;
   }
- 
+
   .scenario-card .sc-tag {
     display: inline-block;
     padding: 3px 10px;
@@ -757,10 +754,10 @@ Copy
     text-transform: uppercase;
     margin-bottom: 12px;
   }
- 
+
   .scenario-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
   .scenario-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
- 
+
   .sc-reveal {
     margin-top: 14px;
     padding: 14px;
@@ -770,9 +767,9 @@ Copy
     display: none;
     border-left: 3px solid;
   }
- 
+
   .sc-reveal.show { display: block; }
- 
+
   .sc-toggle {
     margin-top: 12px;
     padding: 7px 16px;
@@ -787,7 +784,7 @@ Copy
     font-family: 'DM Sans', sans-serif;
   }
   .sc-toggle:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
- 
+
   /* ── SUMMARY NOTES ── */
   .notes-summary {
     background: var(--surface);
@@ -796,22 +793,22 @@ Copy
     padding: 28px;
     margin-bottom: 20px;
   }
- 
+
   .notes-summary h3 { font-family: 'DM Serif Display', serif; font-size: 22px; margin-bottom: 4px; }
   .notes-summary .theory-color { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
   .note-text { font-size: 14px; color: var(--muted); font-style: italic; line-height: 1.6; }
   .no-note { font-size: 13px; color: rgba(255,255,255,0.2); }
- 
+
   /* ── PERSISTENT NOTES ── */
   .note-history { margin-top: 14px; }
- 
+
   .note-entry {
     border-left: 3px solid rgba(255,255,255,0.08);
     padding: 10px 14px;
     margin-bottom: 8px;
     position: relative;
   }
- 
+
   .note-entry .ne-ts {
     font-size: 10px;
     color: var(--muted);
@@ -821,7 +818,7 @@ Copy
     align-items: center;
     gap: 6px;
   }
- 
+
   .note-entry .ne-ts .ne-badge {
     padding: 1px 7px;
     border-radius: 10px;
@@ -830,14 +827,14 @@ Copy
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
- 
+
   .note-entry .ne-text {
     font-size: 14px;
     color: #c5d0df;
     line-height: 1.65;
     font-style: italic;
   }
- 
+
   .note-entry .ne-del {
     position: absolute;
     top: 8px; right: 0;
@@ -853,10 +850,10 @@ Copy
     opacity: 0;
     transition: opacity 0.15s;
   }
- 
+
   .note-entry:hover .ne-del { opacity: 1; }
   .note-entry .ne-del:hover { color: #f87171; }
- 
+
   .note-history-label {
     font-size: 10px;
     font-weight: 600;
@@ -868,14 +865,14 @@ Copy
     align-items: center;
     gap: 8px;
   }
- 
+
   .note-history-label::after {
     content: '';
     flex: 1;
     height: 1px;
     background: var(--border);
   }
- 
+
   /* Return banner */
   .return-banner {
     background: linear-gradient(135deg, rgba(78,205,196,0.12), rgba(78,205,196,0.04));
@@ -889,10 +886,10 @@ Copy
     font-size: 14px;
     color: var(--text);
   }
- 
+
   .return-banner .rb-icon { font-size: 24px; flex-shrink: 0; }
   .return-banner strong { color: var(--sociocultural); }
- 
+
   /* ── TOOLTIP ── */
   [data-tip] { position: relative; cursor: help; border-bottom: 1px dashed var(--muted); }
   [data-tip]:hover::after {
@@ -915,7 +912,7 @@ Copy
     text-align: center;
     line-height: 1.5;
   }
- 
+
   /* ── FLOWCHART ── */
   .flow-row { display: flex; align-items: center; gap: 0; margin: 20px 0; }
   .flow-box {
@@ -928,14 +925,14 @@ Copy
     line-height: 1.35;
   }
   .flow-arrow { font-size: 18px; color: var(--muted); padding: 0 8px; flex-shrink: 0; }
- 
+
   /* ── THINKERS ── */
   .thinker-row {
     display: flex;
     gap: 12px;
     margin: 14px 0;
   }
- 
+
   .thinker {
     flex: 1;
     background: var(--surface2);
@@ -945,7 +942,7 @@ Copy
   }
   .thinker h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
   .thinker p { font-size: 12px; color: var(--muted); line-height: 1.5; }
- 
+
   /* ── WELCOME GRID ── */
   .welcome-grid {
     display: grid;
@@ -953,7 +950,7 @@ Copy
     gap: 14px;
     margin: 32px 0;
   }
- 
+
   .welcome-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -962,25 +959,25 @@ Copy
     cursor: pointer;
     transition: all 0.2s;
   }
- 
+
   .welcome-card:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-2px); background: var(--surface2); }
   .welcome-card .wc-icon { font-size: 28px; margin-bottom: 12px; }
   .welcome-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
   .welcome-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
   .welcome-card .wc-badge { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-bottom: 8px; }
- 
+
   /* section fade */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .section.active .content-area, .section.active .hero { animation: fadeIn 0.35s ease; }
- 
+
   /* scrollbar */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
- 
+
   /* ── MOBILE HEADER ── */
   .mobile-header {
     display: none;
@@ -1030,7 +1027,7 @@ Copy
     font-size: 12px;
     color: var(--muted);
   }
- 
+
   /* ── SIDEBAR OVERLAY (mobile) ── */
   .sidebar-overlay {
     display: none;
@@ -1042,7 +1039,7 @@ Copy
     transition: opacity 0.25s;
   }
   .sidebar-overlay.open { opacity: 1; }
- 
+
   /* ── BOTTOM NAV (mobile) ── */
   .bottom-nav {
     display: none;
@@ -1071,7 +1068,7 @@ Copy
   .bnav-item .bnav-icon { font-size: 20px; line-height: 1; }
   .bnav-item .bnav-label { font-size: 10px; color: var(--muted); font-weight: 500; }
   .bnav-item.active .bnav-label { color: var(--sociocultural); }
- 
+
   /* ── TABLET (≤ 900px) ── */
   @media (max-width: 900px) {
     .sidebar { width: 240px; min-width: 240px; }
@@ -1083,7 +1080,7 @@ Copy
     .concept-grid { grid-template-columns: 1fr 1fr; }
     .thinker-row { flex-direction: column; }
   }
- 
+
   /* ── MOBILE (≤ 640px) ── */
   @media (max-width: 640px) {
     .mobile-header { display: flex; }
@@ -1151,7 +1148,7 @@ Copy
     .notes-summary { padding: 20px 16px; }
     .section-header h2 { font-size: 26px; }
   }
- 
+
   /* ── SMALL MOBILE (≤ 380px) ── */
   @media (max-width: 380px) {
     .concept-grid { grid-template-columns: 1fr; }
@@ -1161,9 +1158,9 @@ Copy
 </style>
 </head>
 <body>
- 
+
 <div class="app">
- 
+
   <!-- MOBILE HEADER -->
   <header class="mobile-header">
     <div class="mobile-header-title">Learning <span>Theories</span></div>
@@ -1174,17 +1171,17 @@ Copy
       <span></span><span></span><span></span>
     </div>
   </header>
- 
+
   <!-- SIDEBAR OVERLAY -->
   <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeDrawer()"></div>
- 
+
   <!-- SIDEBAR -->
   <nav class="sidebar">
     <div class="sidebar-logo">
       <div class="eyebrow">Professional Development</div>
       <h1>Learning <span>Theories</span><br>in Practice</h1>
     </div>
- 
+
     <div class="progress-section">
       <div class="progress-label">
         <span>Your progress</span>
@@ -1192,7 +1189,7 @@ Copy
       </div>
       <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
     </div>
- 
+
     <div class="nav-section">
       <div class="nav-section-label">Introduction</div>
       <div class="nav-item active" onclick="goto('intro')" id="nav-intro" style="--accent-color: var(--sociocultural)">
@@ -1200,7 +1197,7 @@ Copy
         <span class="nav-check">✓</span>
       </div>
     </div>
- 
+
     <div class="nav-section">
       <div class="nav-section-label">The Four Theories</div>
       <div class="nav-item" onclick="goto('behaviorism')" id="nav-behaviorism" style="--accent-color: var(--behaviorism)">
@@ -1220,7 +1217,7 @@ Copy
         <span class="nav-check">✓</span>
       </div>
     </div>
- 
+
     <div class="nav-section">
       <div class="nav-section-label">Apply &amp; Reflect</div>
       <div class="nav-item" onclick="goto('compare')" id="nav-compare" style="--accent-color: var(--gold)">
@@ -1237,10 +1234,10 @@ Copy
       </div>
     </div>
   </nav>
- 
+
   <!-- MAIN -->
   <main class="main">
- 
+
     <!-- ═══ INTRO ═══ -->
     <section class="section active" id="sec-intro">
       <div class="hero">
@@ -1258,7 +1255,7 @@ Copy
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
- 
+
       <div class="content-area">
         <div class="card" style="border-color:rgba(78,205,196,0.2)">
           <div class="card-title" style="color:var(--sociocultural)">How to use this resource</div>
@@ -1296,7 +1293,7 @@ Copy
         </button>
       </div>
     </section>
- 
+
     <!-- ═══ BEHAVIORISM ═══ -->
     <section class="section" id="sec-behaviorism">
       <div class="hero" style="background:linear-gradient(160deg,#1a0f0f 0%,#2a1414 50%,#1a0f0f 100%)">
@@ -1310,14 +1307,14 @@ Copy
           <div class="chip" style="color:var(--behaviorism);border-color:var(--behaviorism);background:rgba(224,92,92,0.08)">Shaping</div>
         </div>
       </div>
- 
+
       <div class="content-area">
         <!-- How does learning happen -->
         <div class="card" style="border-left:3px solid var(--behaviorism)">
           <div class="card-title" style="color:var(--behaviorism)">How does learning happen?</div>
           <p>Learning occurs when a behavior becomes consistently linked to a stimulus through <span data-tip="A stimulus is any event or signal from the environment that triggers a response.">stimuli</span> and responses. Positive outcomes (reinforcement) make behaviors more likely; negative outcomes (punishment) reduce them. Through repetition and feedback, new behaviors are shaped and maintained.</p>
         </div>
- 
+
         <!-- S-R flow -->
         <div class="flow-row">
           <div class="flow-box" style="background:rgba(224,92,92,0.15);color:var(--behaviorism)">Stimulus<br><small style="opacity:.7;font-weight:400">Input / trigger</small></div>
@@ -1326,7 +1323,7 @@ Copy
           <div class="flow-arrow">→</div>
           <div class="flow-box" style="background:rgba(224,92,92,0.2);color:var(--behaviorism)">Reinforcement ±<br><small style="opacity:.7;font-weight:400">Outcome / consequence</small></div>
         </div>
- 
+
         <!-- Thinkers -->
         <div class="card-title" style="color:var(--muted);margin:24px 0 10px">Key Thinkers</div>
         <div class="thinker-row">
@@ -1343,7 +1340,7 @@ Copy
             <p>Founded behaviorism as a formal school. Argued psychology should focus only on observable behavior, not inner mental states.</p>
           </div>
         </div>
- 
+
         <!-- Key concepts -->
         <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
         <div class="concept-grid">
@@ -1378,7 +1375,7 @@ Copy
             <div class="pill-hint">Click for examples</div>
           </div>
         </div>
- 
+
         <!-- Practical tools -->
         <div class="card" style="margin-top:20px">
           <div class="card-title" style="color:var(--behaviorism)">Practical Tools for Your Classroom</div>
@@ -1399,7 +1396,7 @@ Copy
             <div class="tool-info"><h4>Behavior contracts</h4><p>Co-create written agreements with students about expected conduct and consequences. Transparency reduces conflict.</p></div>
           </div>
         </div>
- 
+
         <!-- Strengths & limits -->
         <div class="two-col">
           <div class="card" style="border-color:rgba(74,222,128,0.2)">
@@ -1411,7 +1408,7 @@ Copy
             <p>Ignores the inner life of the learner. Doesn't explain curiosity, intrinsic motivation, or how students solve novel problems they've never seen before.</p>
           </div>
         </div>
- 
+
         <!-- Reflection -->
         <div class="reflection-box">
           <div class="ref-eyebrow">✏ Reflect</div>
@@ -1422,14 +1419,14 @@ Copy
           <button class="save-note-btn" onclick="saveNote('behav', this)">Save note</button>
           <div class="saved-msg" id="saved-behav">Saved ✓</div>
         </div>
- 
+
         <button class="next-btn" onclick="goto('constructivism')" style="background:var(--constructivism);color:#1a0a00">
           Next: Constructivism
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </section>
- 
+
     <!-- ═══ CONSTRUCTIVISM ═══ -->
     <section class="section" id="sec-constructivism">
       <div class="hero" style="background:linear-gradient(160deg,#1a1005 0%,#2a1d09 50%,#1a1005 100%)">
@@ -1443,13 +1440,13 @@ Copy
           <div class="chip" style="color:var(--constructivism);border-color:var(--constructivism);background:rgba(244,162,97,0.08)">Equilibration</div>
         </div>
       </div>
- 
+
       <div class="content-area">
         <div class="card" style="border-left:3px solid var(--constructivism)">
           <div class="card-title" style="color:var(--constructivism)">How does learning happen?</div>
           <p>When learners encounter something new, they try to fit it into existing <span data-tip="A schema is a mental framework or structure that helps us organize and interpret information.">schemas</span>. If it fits, this is <strong style="color:var(--white)">assimilation</strong>. If it doesn't fit, the schema must be restructured — this is <strong style="color:var(--white)">accommodation</strong>. The tension between the two drives learning forward through a process called <strong style="color:var(--white)">equilibration</strong>.</p>
         </div>
- 
+
         <!-- Piaget flow -->
         <div class="flow-row" style="margin:20px 0">
           <div class="flow-box" style="background:rgba(244,162,97,0.15);color:var(--constructivism)">New Experience<br><small style="opacity:.7;font-weight:400">Encounter something unfamiliar</small></div>
@@ -1458,7 +1455,7 @@ Copy
           <div class="flow-arrow">→</div>
           <div class="flow-box" style="background:rgba(244,162,97,0.2);color:var(--constructivism)">Equilibrium<br><small style="opacity:.7;font-weight:400">New understanding reached</small></div>
         </div>
- 
+
         <div class="card-title" style="color:var(--muted);margin:24px 0 10px">Key Thinkers</div>
         <div class="thinker-row">
           <div class="thinker" style="border-left:3px solid var(--constructivism)">
@@ -1474,7 +1471,7 @@ Copy
             <p>Advocated for discovery learning and the spiral curriculum — revisiting core ideas at increasing levels of complexity.</p>
           </div>
         </div>
- 
+
         <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
         <div class="concept-grid">
           <div class="concept-pill" onclick="openConcept('schema')" style="border-left:2px solid var(--constructivism)">
@@ -1508,7 +1505,7 @@ Copy
             <div class="pill-hint">Click for examples</div>
           </div>
         </div>
- 
+
         <div class="card" style="margin-top:20px">
           <div class="card-title" style="color:var(--constructivism)">Practical Tools for Your Classroom</div>
           <div class="tool-row">
@@ -1528,7 +1525,7 @@ Copy
             <div class="tool-info"><h4>Ask students to explain</h4><p>When students articulate their understanding in their own words, they consolidate it. Use "explain to a partner" and "teach me how you solved that".</p></div>
           </div>
         </div>
- 
+
         <div class="two-col">
           <div class="card" style="border-color:rgba(74,222,128,0.2)">
             <div class="card-title" style="color:#4ade80">✓ Strengths</div>
@@ -1539,7 +1536,7 @@ Copy
             <p>Can feel unstructured. Without enough guidance, students may construct misconceptions. Requires careful facilitation.</p>
           </div>
         </div>
- 
+
         <div class="reflection-box">
           <div class="ref-eyebrow">✏ Reflect</div>
           <h3>When do your students build real understanding?</h3>
@@ -1549,14 +1546,14 @@ Copy
           <button class="save-note-btn" onclick="saveNote('const', this)">Save note</button>
           <div class="saved-msg" id="saved-const">Saved ✓</div>
         </div>
- 
+
         <button class="next-btn" onclick="goto('sociocultural')" style="background:var(--sociocultural);color:#0a1a18">
           Next: Sociocultural Theory
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </section>
- 
+
     <!-- ═══ SOCIOCULTURAL ═══ -->
     <section class="section" id="sec-sociocultural">
       <div class="hero" style="background:linear-gradient(160deg,#071614 0%,#0e2422 50%,#071614 100%)">
@@ -1570,13 +1567,13 @@ Copy
           <div class="chip" style="color:var(--sociocultural);border-color:var(--sociocultural);background:rgba(78,205,196,0.08)">MKO</div>
         </div>
       </div>
- 
+
       <div class="content-area">
         <div class="card" style="border-left:3px solid var(--sociocultural)">
           <div class="card-title" style="color:var(--sociocultural)">How does learning happen?</div>
           <p>Learning is embedded in social interaction, language, and cultural tools. The most important concept is the <span data-tip="Zone of Proximal Development: the gap between what a learner can do alone and what they can do with expert guidance.">Zone of Proximal Development (ZPD)</span> — the space between what a learner can do independently and what they can do with expert support. The role of the teacher (or peer) is to provide temporary scaffolding within this zone.</p>
         </div>
- 
+
         <!-- ZPD visual -->
         <div style="position:relative;margin:24px 0;padding:24px;background:var(--surface);border-radius:12px;border:1px solid var(--border);text-align:center">
           <div style="width:280px;height:280px;border-radius:50%;border:2px dashed rgba(78,205,196,0.3);margin:0 auto;display:flex;align-items:center;justify-content:center;position:relative">
@@ -1590,7 +1587,7 @@ Copy
           </div>
           <div style="margin-top:14px;font-size:13px;color:var(--muted);font-style:italic">Vygotsky's Zone of Proximal Development</div>
         </div>
- 
+
         <div class="card-title" style="color:var(--muted);margin:24px 0 10px">Key Thinkers</div>
         <div class="thinker-row">
           <div class="thinker" style="border-left:3px solid var(--sociocultural)">
@@ -1606,7 +1603,7 @@ Copy
             <p>Extended Vygotsky's ideas to include how cultural tools (language, diagrams, technology) mediate thinking and learning.</p>
           </div>
         </div>
- 
+
         <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
         <div class="concept-grid">
           <div class="concept-pill" onclick="openConcept('zpd')" style="border-left:2px solid var(--sociocultural)">
@@ -1640,7 +1637,7 @@ Copy
             <div class="pill-hint">Click for examples</div>
           </div>
         </div>
- 
+
         <div class="card" style="margin-top:20px">
           <div class="card-title" style="color:var(--sociocultural)">Practical Tools for Your Classroom</div>
           <div class="tool-row">
@@ -1660,7 +1657,7 @@ Copy
             <div class="tool-info"><h4>Rich classroom dialogue</h4><p>Ask open questions that invite reasoning: "Why do you think that worked?" "What would happen if you tried it differently?" Language is the primary learning tool.</p></div>
           </div>
         </div>
- 
+
         <div class="two-col">
           <div class="card" style="border-color:rgba(74,222,128,0.2)">
             <div class="card-title" style="color:#4ade80">✓ Strengths</div>
@@ -1671,7 +1668,7 @@ Copy
             <p>Requires well-structured collaboration. Without guidance, group work can be unproductive. Measuring ZPD precisely is difficult.</p>
           </div>
         </div>
- 
+
         <div class="reflection-box">
           <div class="ref-eyebrow">✏ Reflect</div>
           <h3>Where are you the "More Knowledgeable Other"?</h3>
@@ -1681,14 +1678,14 @@ Copy
           <button class="save-note-btn" onclick="saveNote('socio', this)">Save note</button>
           <div class="saved-msg" id="saved-socio">Saved ✓</div>
         </div>
- 
+
         <button class="next-btn" onclick="goto('cognitivism')" style="background:var(--cognitivism);color:#0f0d1a">
           Next: Cognitivism
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </section>
- 
+
     <!-- ═══ COGNITIVISM ═══ -->
     <section class="section" id="sec-cognitivism">
       <div class="hero" style="background:linear-gradient(160deg,#100f1a 0%,#1a1830 50%,#100f1a 100%)">
@@ -1702,13 +1699,13 @@ Copy
           <div class="chip" style="color:var(--cognitivism);border-color:var(--cognitivism);background:rgba(155,143,232,0.08)">Bloom's Taxonomy</div>
         </div>
       </div>
- 
+
       <div class="content-area">
         <div class="card" style="border-left:3px solid var(--cognitivism)">
           <div class="card-title" style="color:var(--cognitivism)">How does learning happen?</div>
           <p>New information enters through the senses into <span data-tip="Sensory register: the brief, large-capacity store that holds raw sensory impressions for less than a second.">sensory register</span>, then moves to <span data-tip="Working memory: limited capacity (~7 items), holds information while we actively think with it.">working memory</span> for active processing. If well-encoded, it transfers to <span data-tip="Long-term memory: essentially unlimited capacity, stores knowledge and skills over time.">long-term memory</span>. The quality of learning depends on how deeply information is processed and how well it connects to existing knowledge.</p>
         </div>
- 
+
         <!-- Memory model -->
         <div class="flow-row" style="margin:20px 0">
           <div class="flow-box" style="background:rgba(155,143,232,0.1);color:var(--cognitivism);font-size:12px">Sensory Register<br><small style="opacity:.7;font-weight:400;font-size:11px">Brief, raw input</small></div>
@@ -1718,7 +1715,7 @@ Copy
           <div class="flow-box" style="background:rgba(155,143,232,0.3);color:var(--white);font-size:12px">Long-term Memory<br><small style="opacity:.7;font-weight:400;font-size:11px">Unlimited, permanent</small></div>
         </div>
         <div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:24px;font-style:italic">Atkinson &amp; Shiffrin's Multi-Store Model of Memory</div>
- 
+
         <div class="card-title" style="color:var(--muted);margin:24px 0 10px">Key Thinkers</div>
         <div class="thinker-row">
           <div class="thinker" style="border-left:3px solid var(--cognitivism)">
@@ -1734,7 +1731,7 @@ Copy
             <p>Coined <em>metacognition</em> — thinking about one's own thinking. Students who monitor their own understanding learn more effectively.</p>
           </div>
         </div>
- 
+
         <div class="card-title" style="color:var(--muted);margin:28px 0 10px">Key Concepts</div>
         <div class="concept-grid">
           <div class="concept-pill" onclick="openConcept('cognitive-load')" style="border-left:2px solid var(--cognitivism)">
@@ -1768,7 +1765,7 @@ Copy
             <div class="pill-hint">Click for examples</div>
           </div>
         </div>
- 
+
         <!-- Bloom's visual -->
         <div class="card" style="margin-top:20px">
           <div class="card-title" style="color:var(--cognitivism)">Bloom's Taxonomy in Practice</div>
@@ -1782,7 +1779,7 @@ Copy
             <div style="padding:8px 16px;border-radius:6px;font-size:13px;background:rgba(155,143,232,0.06);color:var(--muted)"><strong>Remember</strong> — Recall, list, recognize, name</div>
           </div>
         </div>
- 
+
         <div class="card" style="margin-top:16px">
           <div class="card-title" style="color:var(--cognitivism)">Practical Tools for Your Classroom</div>
           <div class="tool-row">
@@ -1802,7 +1799,7 @@ Copy
             <div class="tool-info"><h4>Teach metacognitive strategies</h4><p>Help students monitor their own understanding: "Do I actually understand this, or do I just recognize it?" Teach them to self-test, not just re-read.</p></div>
           </div>
         </div>
- 
+
         <div class="two-col">
           <div class="card" style="border-color:rgba(74,222,128,0.2)">
             <div class="card-title" style="color:#4ade80">✓ Strengths</div>
@@ -1813,7 +1810,7 @@ Copy
             <p>Can become overly technical. Doesn't fully account for emotional, social, or cultural factors in learning.</p>
           </div>
         </div>
- 
+
         <div class="reflection-box">
           <div class="ref-eyebrow">✏ Reflect</div>
           <h3>Are your students overloaded?</h3>
@@ -1823,14 +1820,14 @@ Copy
           <button class="save-note-btn" onclick="saveNote('cogn', this)">Save note</button>
           <div class="saved-msg" id="saved-cogn">Saved ✓</div>
         </div>
- 
+
         <button class="next-btn" onclick="goto('compare')" style="background:var(--gold);color:#1a1000">
           Next: Compare &amp; Apply
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </section>
- 
+
     <!-- ═══ COMPARE & SCENARIOS ═══ -->
     <section class="section" id="sec-compare">
       <div class="hero" style="background:linear-gradient(160deg,#12100a 0%,#201b0c 50%,#12100a 100%)">
@@ -1838,7 +1835,7 @@ Copy
         <h2>All four theories — <em style="color:var(--gold)">side by side</em></h2>
         <p class="hero-sub">No single theory explains learning completely. Expert teachers draw on all four — choosing the right approach for the right moment. Here's how to see the differences clearly, and how to apply them.</p>
       </div>
- 
+
       <div class="content-area">
         <!-- Comparison table -->
         <div class="card" style="padding:0;overflow-x:auto;-webkit-overflow-scrolling:touch">
@@ -1898,13 +1895,13 @@ Copy
             </tbody>
           </table>
         </div>
- 
+
         <!-- Scenarios -->
         <div style="margin-top:36px">
           <div class="card-title" style="color:var(--gold);margin-bottom:6px">Classroom Scenarios</div>
           <p style="font-size:14px;color:var(--muted);margin-bottom:20px">Read each scenario. Think about which theory best explains the situation. Then reveal the analysis.</p>
         </div>
- 
+
         <div class="scenario-card">
           <div class="sc-tag" style="background:rgba(224,92,92,0.15);color:var(--behaviorism)">Scenario 1</div>
           <h4>The student who always forgets safety goggles</h4>
@@ -1914,7 +1911,7 @@ Copy
             <strong>Behaviorist approach:</strong> The behavior (forgetting goggles) has not been consistently followed by an unpleasant consequence or extinguished. Implement a clear, consistent rule with immediate consequences every single time. Also consider using positive reinforcement: when he puts them on unprompted, acknowledge it specifically. Consistency is everything in operant conditioning.
           </div>
         </div>
- 
+
         <div class="scenario-card">
           <div class="sc-tag" style="background:rgba(244,162,97,0.15);color:var(--constructivism)">Scenario 2</div>
           <h4>Students who can follow steps but can't problem-solve</h4>
@@ -1924,7 +1921,7 @@ Copy
             <strong>Constructivist response:</strong> They've been trained, not educated. They've assimilated steps without building real schemas. Try deliberately breaking the procedure and asking students to diagnose what went wrong. Let them struggle productively before you explain. Introduce tasks with no single right answer. Their job is to build understanding, not just reproduce steps.
           </div>
         </div>
- 
+
         <div class="scenario-card">
           <div class="sc-tag" style="background:rgba(78,205,196,0.15);color:var(--sociocultural)">Scenario 3</div>
           <h4>The silent student who learns by watching</h4>
@@ -1934,7 +1931,7 @@ Copy
             <strong>Sociocultural lens:</strong> She's learning within the ZPD — she can do things with support that she can't yet do alone. This is not a weakness; it's exactly where learning happens. Structure more collaborative tasks for her, ensure the pairing is supportive rather than dominant, and gradually give her tasks that require more independence. Track whether the gap narrows over time.
           </div>
         </div>
- 
+
         <div class="scenario-card">
           <div class="sc-tag" style="background:rgba(155,143,232,0.15);color:var(--cognitivism)">Scenario 4</div>
           <h4>Students who seem to understand but fail the exam</h4>
@@ -1944,14 +1941,14 @@ Copy
             <strong>Cognitivist diagnosis:</strong> Students are likely recognizing information rather than retrieving it — a classic illusion of knowing. They've been passive (re-reading, listening) instead of actively retrieving (self-testing, explaining from memory). Switch to frequent, low-stakes retrieval practice. Use exit tickets, mini-quizzes, and ask students to explain concepts with the notes closed. Spaced repetition over time will improve retention.
           </div>
         </div>
- 
+
         <button class="next-btn" onclick="goto('quiz')" style="background:#7dd3fc;color:#0a1520">
           Take the Knowledge Check
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </section>
- 
+
     <!-- ═══ QUIZ ═══ -->
     <section class="section" id="sec-quiz">
       <div class="hero" style="background:linear-gradient(160deg,#080f18 0%,#0d1825 50%,#080f18 100%)">
@@ -1959,10 +1956,10 @@ Copy
         <h2>Test your <em style="color:#7dd3fc">understanding</em></h2>
         <p class="hero-sub">8 questions across all four theories. Choose your answer, then check it. There's no pressure — this is about reflection, not grading.</p>
       </div>
- 
+
       <div class="content-area">
         <div class="quiz-wrapper">
- 
+
           <!-- Q1 -->
           <div class="quiz-q" id="q1">
             <div class="q-num">Question 1 / 8</div>
@@ -1976,7 +1973,7 @@ Copy
             <button class="check-btn" onclick="checkQ('q1', this)">Check answer</button>
             <div class="quiz-feedback" id="fb-q1"></div>
           </div>
- 
+
           <!-- Q2 -->
           <div class="quiz-q" id="q2">
             <div class="q-num">Question 2 / 8</div>
@@ -1990,7 +1987,7 @@ Copy
             <button class="check-btn" onclick="checkQ('q2', this)">Check answer</button>
             <div class="quiz-feedback" id="fb-q2"></div>
           </div>
- 
+
           <!-- Q3 -->
           <div class="quiz-q" id="q3">
             <div class="q-num">Question 3 / 8</div>
@@ -2004,7 +2001,7 @@ Copy
             <button class="check-btn" onclick="checkQ('q3', this)">Check answer</button>
             <div class="quiz-feedback" id="fb-q3"></div>
           </div>
- 
+
           <!-- Q4 -->
           <div class="quiz-q" id="q4">
             <div class="q-num">Question 4 / 8</div>
@@ -2018,7 +2015,7 @@ Copy
             <button class="check-btn" onclick="checkQ('q4', this)">Check answer</button>
             <div class="quiz-feedback" id="fb-q4"></div>
           </div>
- 
+
           <!-- Q5 -->
           <div class="quiz-q" id="q5">
             <div class="q-num">Question 5 / 8</div>
@@ -2032,7 +2029,7 @@ Copy
             <button class="check-btn" onclick="checkQ('q5', this)">Check answer</button>
             <div class="quiz-feedback" id="fb-q5"></div>
           </div>
- 
+
           <!-- Q6 -->
           <div class="quiz-q" id="q6">
             <div class="q-num">Question 6 / 8</div>
@@ -2046,7 +2043,7 @@ Copy
             <button class="check-btn" onclick="checkQ('q6', this)">Check answer</button>
             <div class="quiz-feedback" id="fb-q6"></div>
           </div>
- 
+
           <!-- Q7 -->
           <div class="quiz-q" id="q7">
             <div class="q-num">Question 7 / 8</div>
@@ -2060,7 +2057,7 @@ Copy
             <button class="check-btn" onclick="checkQ('q7', this)">Check answer</button>
             <div class="quiz-feedback" id="fb-q7"></div>
           </div>
- 
+
           <!-- Q8 -->
           <div class="quiz-q" id="q8">
             <div class="q-num">Question 8 / 8</div>
@@ -2074,7 +2071,7 @@ Copy
             <button class="check-btn" onclick="checkQ('q8', this)">Check answer</button>
             <div class="quiz-feedback" id="fb-q8"></div>
           </div>
- 
+
           <div class="quiz-score-box" id="quiz-score">
             <div class="score-big" id="score-display">–/8</div>
             <div class="score-sub" id="score-msg">Complete all questions to see your score.</div>
@@ -2083,11 +2080,11 @@ Copy
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
- 
+
         </div>
       </div>
     </section>
- 
+
     <!-- ═══ SUMMARY ═══ -->
     <section class="section" id="sec-summary">
       <div class="hero" style="background:linear-gradient(160deg,#0f1623 0%,#1a2744 50%,#0f1623 100%)">
@@ -2095,16 +2092,16 @@ Copy
         <h2>Your <em style="color:var(--gold)">learning journey</em> so far</h2>
         <p class="hero-sub">All your reflections — saved across sessions. Your notes are stored in this browser and will be here next time you return.</p>
       </div>
- 
+
       <div class="content-area">
- 
+
         <!-- Storage status bar -->
         <div id="storage-banner" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.2);border-radius:10px;margin-bottom:24px;font-size:13px;color:var(--muted)">
           <span style="font-size:16px">💾</span>
           <span id="storage-status">Notes are saved in your browser — they will be here next time you open this page.</span>
           <button onclick="clearAllData()" style="margin-left:auto;padding:5px 12px;border-radius:6px;border:1px solid rgba(248,113,113,0.3);background:rgba(248,113,113,0.08);color:#f87171;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap">Clear all data</button>
         </div>
- 
+
         <!-- Per-theory note cards -->
         <div class="notes-summary" id="ns-behav">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
@@ -2115,7 +2112,7 @@ Copy
           <div id="note-behav-display" class="no-note">No note saved yet.</div>
           <div id="note-behav-history" class="note-history"></div>
         </div>
- 
+
         <div class="notes-summary" id="ns-const">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
             <div class="theory-color" style="color:var(--constructivism);margin-bottom:0">Constructivism</div>
@@ -2125,7 +2122,7 @@ Copy
           <div id="note-const-display" class="no-note">No note saved yet.</div>
           <div id="note-const-history" class="note-history"></div>
         </div>
- 
+
         <div class="notes-summary" id="ns-socio">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
             <div class="theory-color" style="color:var(--sociocultural);margin-bottom:0">Sociocultural Theory</div>
@@ -2135,7 +2132,7 @@ Copy
           <div id="note-socio-display" class="no-note">No note saved yet.</div>
           <div id="note-socio-history" class="note-history"></div>
         </div>
- 
+
         <div class="notes-summary" id="ns-cogn">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
             <div class="theory-color" style="color:var(--cognitivism);margin-bottom:0">Cognitivism</div>
@@ -2145,7 +2142,7 @@ Copy
           <div id="note-cogn-display" class="no-note">No note saved yet.</div>
           <div id="note-cogn-history" class="note-history"></div>
         </div>
- 
+
         <!-- Final reflection -->
         <div class="reflection-box" style="margin-top:32px">
           <div class="ref-eyebrow">✏ Final Reflection</div>
@@ -2158,17 +2155,17 @@ Copy
           <button class="save-note-btn" onclick="saveNote('final', this)">Save note</button>
           <div class="saved-msg" id="saved-final">Saved ✓</div>
         </div>
- 
+
         <!-- Completion badge -->
         <div id="completion-box" style="background:linear-gradient(135deg,rgba(78,205,196,0.12),rgba(155,143,232,0.08));border:1px solid rgba(78,205,196,0.2);border-radius:16px;padding:40px;text-align:center;margin-top:28px">
           <div style="font-size:48px;margin-bottom:16px">🎓</div>
           <div style="font-family:'DM Serif Display',serif;font-size:26px;color:var(--white);margin-bottom:10px">You've completed the guide.</div>
           <p style="font-size:15px;color:var(--muted);max-width:480px;margin:0 auto;line-height:1.7">No single theory is the answer — the best teachers use all four as lenses. Keep these ideas close as you plan, and revisit them as your practice develops.</p>
         </div>
- 
+
       </div>
     </section>
- 
+
   <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
     <button class="bnav-item active" onclick="goto('intro')" id="bnav-intro">
@@ -2204,10 +2201,10 @@ Copy
       <span class="bnav-label">Notes</span>
     </button>
   </nav>
- 
+
   </main>
 </div>
- 
+
 <!-- MODAL OVERLAY -->
 <div class="modal-overlay" id="concept-modal" onclick="closeModal(event)">
   <div class="modal" id="modal-box">
@@ -2219,25 +2216,25 @@ Copy
     <div id="modal-examples"></div>
   </div>
 </div>
- 
+
 <script>
   // ── localStorage helpers ──
   const LS_KEY = 'lt_data_v1';
- 
+
   function loadStorage() {
     try {
       const raw = localStorage.getItem(LS_KEY);
       return raw ? JSON.parse(raw) : {};
     } catch(e) { return {}; }
   }
- 
+
   function saveStorage(data) {
     try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e) {}
   }
- 
+
   // ── State (loaded from localStorage) ──
   let _store = loadStorage();
- 
+
   // notes: { key: [ { text, ts, session } ] }
   const notes = _store.notes || {};
   // visited: array of section ids
@@ -2245,7 +2242,7 @@ Copy
   // quiz
   const quizAnswers = _store.quizAnswers || {};
   let quizScore = _store.quizScore || 0;
- 
+
   // session id: timestamp of first visit in this session
   const SESSION_ID = (() => {
     if (_store.currentSession) return _store.currentSession;
@@ -2254,7 +2251,7 @@ Copy
     saveStorage(_store);
     return id;
   })();
- 
+
   function persist() {
     _store.notes       = notes;
     _store.visited     = Array.from(visited);
@@ -2263,19 +2260,19 @@ Copy
     _store.currentSession = SESSION_ID;
     saveStorage(_store);
   }
- 
+
   function fmtDate(ts) {
     const d = new Date(ts);
     return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' })
       + ' · ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
   }
- 
+
   function isNewSession(ts) {
     // a note belongs to this session if its ts is within the SESSION_ID window
     // SESSION_ID is set once per browser session; notes from earlier sessions differ
     return ts >= SESSION_ID;
   }
- 
+
   // ── Concept data ──
   const CONCEPTS = {
     // BEHAVIORISM
@@ -2333,7 +2330,7 @@ Copy
         { icon: '🗣️', scenario: 'Oral presentations', text: 'A shy student struggles with public speaking. First, you reinforce them for just standing up. Then for speaking for 30 seconds. Then for making eye contact. Gradually, full confident presentations become achievable through reinforced steps.' }
       ]
     },
- 
+
     // CONSTRUCTIVISM
     'schema': {
       theory: 'Constructivism', color: '#f4a261',
@@ -2389,7 +2386,7 @@ Copy
         { icon: '📐', scenario: 'Technical drawing', text: 'Module 1: students read simple orthographic projections. Module 3: they produce their own. Module 5: they read and annotate manufacturing drawings with tolerances. The skill spirals from recognition to production to critical reading.' }
       ]
     },
- 
+
     // SOCIOCULTURAL
     'zpd': {
       theory: 'Sociocultural Theory', color: '#4ecdc4',
@@ -2445,7 +2442,7 @@ Copy
         { icon: '🤝', scenario: 'Industry visits and mentors', text: 'When you bring a practicing engineer into class, or take students on an industry visit, you\'re exposing them to an existing community of practice. They begin to see themselves as future members — which is a powerful motivator.' }
       ]
     },
- 
+
     // COGNITIVISM
     'cognitive-load': {
       theory: 'Cognitivism', color: '#9b8fe8',
@@ -2502,21 +2499,21 @@ Copy
       ]
     }
   };
- 
+
   // ── Modal ──
   function openConcept(key) {
     const d = CONCEPTS[key];
     if (!d) return;
     const overlay = document.getElementById('concept-modal');
     const modal = document.getElementById('modal-box');
- 
+
     document.getElementById('modal-tag').textContent = d.theory;
     document.getElementById('modal-tag').style.background = d.color + '22';
     document.getElementById('modal-tag').style.color = d.color;
     document.getElementById('modal-title').textContent = d.title;
     document.getElementById('modal-def').textContent = d.def;
     modal.style.setProperty('--modal-color', d.color);
- 
+
     const exHTML = d.examples.map(ex => `
       <div class="modal-example">
         <span class="ex-icon">${ex.icon}</span>
@@ -2525,22 +2522,22 @@ Copy
       </div>
     `).join('');
     document.getElementById('modal-examples').innerHTML = exHTML;
- 
+
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
- 
+
   function closeModal(e) {
     if (e.target === document.getElementById('concept-modal')) closeModalDirect();
   }
- 
+
   function closeModalDirect() {
     document.getElementById('concept-modal').classList.remove('open');
     document.body.style.overflow = '';
   }
- 
+
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
- 
+
   const feedbackTexts = {
     q1: { correct: "Correct! Skinner developed operant conditioning through his famous 'Skinner box' experiments, showing that consequences shape behavior.", wrong: "Not quite. Pavlov discovered classical conditioning (dogs and bells). Skinner developed operant conditioning — behavior shaped by rewards and punishments." },
     q2: { correct: "Correct! Accommodation happens when existing schemas must be restructured to fit new, conflicting information.", wrong: "Not quite. Assimilation is when new info fits neatly into an existing schema. Accommodation is when the schema itself must change to handle something that doesn't fit." },
@@ -2551,7 +2548,7 @@ Copy
     q7: { correct: "Exactly. Metacognition — coined by Flavell — is about being aware of and managing your own thinking. It's one of the highest-leverage skills you can teach.", wrong: "Metacognition means 'thinking about thinking.' It's the ability to monitor, evaluate, and regulate your own learning — a key skill for independent learners." },
     q8: { correct: "Correct! An advance organizer (Ausubel) is a preview that connects new learning to prior knowledge, giving students cognitive hooks for what's coming.", wrong: "This is an advance organizer, introduced by David Ausubel. It's a cognitive tool that helps students connect new content to what they already know before the lesson begins." }
   };
- 
+
   // ── Drawer ──
   function toggleDrawer() {
     const sidebar = document.querySelector('.sidebar');
@@ -2561,13 +2558,13 @@ Copy
     overlay.classList.toggle('open', open);
     burger.classList.toggle('open', open);
   }
- 
+
   function closeDrawer() {
     document.querySelector('.sidebar').classList.remove('drawer-open');
     document.getElementById('sidebar-overlay').classList.remove('open');
     document.getElementById('hamburger').classList.remove('open');
   }
- 
+
   // ── Navigation ──
   function goto(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -2583,7 +2580,7 @@ Copy
     closeDrawer();
     if (id === 'summary') updateSummary();
   }
- 
+
   function updateProgress() {
     const total = 8;
     const pct = Math.round((visited.size / total) * 100);
@@ -2599,43 +2596,43 @@ Copy
     });
     persist();
   }
- 
+
   // ── Notes ──
   function saveNote(key, btn) {
     const ta = document.getElementById('ref-' + key);
     const text = ta.value.trim();
     if (!text) return;
- 
+
     if (!notes[key]) notes[key] = [];
     notes[key].push({ text, ts: Date.now(), session: SESSION_ID });
     persist();
- 
+
     // Clear textarea after saving
     ta.value = '';
- 
+
     const msg = document.getElementById('saved-' + key);
     msg.style.opacity = '1';
     setTimeout(() => { msg.style.opacity = '0'; }, 2000);
- 
+
     // Live-update summary if open
     renderNoteEntry(key);
   }
- 
+
   function deleteNote(key, idx) {
     if (!notes[key]) return;
     notes[key].splice(idx, 1);
     persist();
     renderNoteEntry(key);
   }
- 
+
   function renderNoteEntry(key) {
     const entries = notes[key] || [];
     const dispEl   = document.getElementById('note-' + key + '-display');
     const histEl   = document.getElementById('note-' + key + '-history');
     const tsEl     = document.getElementById('ts-' + key);
- 
+
     if (!dispEl) return;
- 
+
     if (entries.length === 0) {
       dispEl.className = 'no-note';
       dispEl.textContent = 'No note saved yet.';
@@ -2643,18 +2640,18 @@ Copy
       if (tsEl) tsEl.textContent = '';
       return;
     }
- 
+
     // Latest note shown prominently
     const latest = entries[entries.length - 1];
     dispEl.className = 'note-text';
     dispEl.textContent = '"'  + latest.text + '"';
     if (tsEl) tsEl.textContent = fmtDate(latest.ts);
- 
+
     // Older notes in history
     if (!histEl) return;
     const older = entries.slice(0, -1);
     if (older.length === 0) { histEl.innerHTML = ''; return; }
- 
+
     let html = '<div class="note-history-label">Previous entries</div>';
     older.forEach((e, i) => {
       const badge = isNewSession(e.ts) ? 'This session' : 'Previous session';
@@ -2670,17 +2667,17 @@ Copy
     });
     histEl.innerHTML = html;
   }
- 
+
   function clearAllData() {
     if (!confirm('Clear all saved notes and progress? This cannot be undone.')) return;
     localStorage.removeItem(LS_KEY);
     location.reload();
   }
- 
+
   function updateSummary() {
     ['behav', 'const', 'socio', 'cogn', 'final'].forEach(key => renderNoteEntry(key));
   }
- 
+
   // Restore textarea content if there was an unsaved draft (autosave)
   function autosave(key) {
     const ta = document.getElementById('ref-' + key);
@@ -2695,7 +2692,7 @@ Copy
       if (draft) ta.value = draft;
     } catch(e) {}
   }
- 
+
   // ── Scenarios ──
   function toggleReveal(btn) {
     const reveal = btn.nextElementSibling;
@@ -2707,37 +2704,37 @@ Copy
       btn.textContent = 'Hide analysis ↑';
     }
   }
- 
+
   // ── Quiz ──
   function selectOpt(el, qid, isCorrect) {
     if (quizAnswers[qid] !== undefined) return;
     el.dataset.correct = isCorrect;
     el.classList.add('selected');
   }
- 
+
   function checkQ(qid, btn) {
     const opts = document.querySelectorAll('#' + qid + ' .quiz-option');
     let selected = null;
     opts.forEach(o => { if (o.classList.contains('selected')) selected = o; });
     if (!selected) return;
     if (btn.classList.contains('answered')) return;
- 
+
     const isCorrect = selected.dataset.correct === 'true';
     quizAnswers[qid] = isCorrect;
     if (isCorrect) quizScore++;
- 
+
     opts.forEach(o => {
       if (o.dataset.correct === 'true') o.classList.add('correct');
       else if (o.classList.contains('selected')) o.classList.add('wrong');
     });
- 
+
     const fb = document.getElementById('fb-' + qid);
     fb.className = 'quiz-feedback show ' + (isCorrect ? 'correct' : 'wrong');
     fb.textContent = feedbackTexts[qid][isCorrect ? 'correct' : 'wrong'];
- 
+
     btn.classList.add('answered');
     btn.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
- 
+
     if (Object.keys(quizAnswers).length === 8) {
       const box = document.getElementById('quiz-score');
       box.classList.add('show');
@@ -2750,7 +2747,7 @@ Copy
     }
     persist();
   }
- 
+
   // ── Restore quiz UI from saved state ──
   function restoreQuiz() {
     Object.entries(quizAnswers).forEach(([qid, isCorrect]) => {
@@ -2784,7 +2781,7 @@ Copy
       if (msgEl) msgEl.textContent = msgs[idx];
     }
   }
- 
+
   // ── Show return-visitor banner if they have previous notes ──
   function showReturnBanner() {
     const hasNotes = ['behav','const','socio','cogn','final'].some(k => notes[k] && notes[k].length > 0);
@@ -2802,20 +2799,20 @@ Copy
       if (contentArea) contentArea.insertBefore(banner, contentArea.firstChild);
     }
   }
- 
+
   // ── INIT ──
   // Setup autosave drafts
   ['behav','const','socio','cogn','final'].forEach(k => autosave(k));
- 
+
   // Restore quiz UI
   restoreQuiz();
- 
+
   // Restore visited nav marks
   updateProgress();
- 
+
   // Render any existing notes in summary (in case summary is visited first)
   updateSummary();
- 
+
   // Welcome back banner
   showReturnBanner();
 </script>
